@@ -3,7 +3,7 @@ class AreasController < ApplicationController
 before_filter :load_resources
 
   def index
-    @areas = Area.paginate :page => params[:page], :order => 'nome ASC', :per_page => 10
+    @areas = Area.paginate :page => params[:page], :order => 'nome ASC', :per_page => 20
     
   end
 
@@ -51,7 +51,7 @@ def consultaAre
   unless params[:search].present?
     if params[:type_of].to_i == 3
       @contador = Area.all.count
-      @areas = Area.paginate :all,:page => params[:page], :order => 'nome ASC', :per_page => 10
+      @areas = Area.paginate :all,:page => params[:page], :order => 'nome ASC', :per_page => 20
       render :update do |page|
         page.replace_html 'areas', :partial => "areas"
       end
@@ -59,7 +59,7 @@ def consultaAre
   else
     if params[:type_of].to_i == 1
       @contador = Area.all(:conditions => ["nome like ?", "%" + params[:search].to_s + "%"]).count
-      @areas = Area.paginate :all, :page => params[:page], :per_page => 10, :conditions => ["nome like ?", "%" + params[:search].to_s + "%"],:order => 'nome ASC'
+      @areas = Area.paginate :all, :page => params[:page], :per_page => 20, :conditions => ["nome like ?", "%" + params[:search].to_s + "%"],:order => 'nome ASC'
       render :update do |page|
         page.replace_html 'areas', :partial => "areas"
       end

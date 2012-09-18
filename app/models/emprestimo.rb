@@ -1,4 +1,5 @@
 class Emprestimo < ActiveRecord::Base
+  has_many :alunoclasse
   before_create :kind_of, :inabilita
   after_update :habilita
   has_one :devolucao
@@ -9,7 +10,7 @@ class Emprestimo < ActiveRecord::Base
 
   Tipo = {'Funcionário' => 0, 'Aluno' => 1}
   Kind = {'Livro' => 0, 'Dicionario / enciclopedia' => 1}
-  
+
   def inabilita
     dpu_emprestada = Dpu.find(self.dpus)
     dpu_emprestada.each do |z|

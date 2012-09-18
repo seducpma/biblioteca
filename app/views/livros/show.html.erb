@@ -1,3 +1,4 @@
+<div id="interno2">
 <% title "LIVRO" %>
 <div class ="tabs">
   <div id="topoShow"></div>
@@ -6,8 +7,9 @@
      <div id="telaShow">
          <div id="linhaCentral">
            <div id="conteudoEsquerda">
-              <h3><b><i><font color="DimGrey">Informações sobre o Livro</font></i></b></h3>
+              <h3><b><i><font color="DimGrey">Informações sobre a publicação</font></i></b></h3>
                   <hr>
+                    <strong>Tipo:</strong>  <%=h @livro.tipo %><br/>
                     <strong>Coleção:</strong>  <%=h @livro.colecao %><br/>
                     <strong>Area:</strong>  <%=h @livro.area.nome %><br/>
                     <strong>Empréstimo:</strong>  <% if @livro.status == true %>
@@ -70,5 +72,5 @@
             <%end%>
           </tr>
         </table>
-
+</div>
 </div>

@@ -2,123 +2,185 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title><%= "Sistema de Biblioteca - BibliOS. Você está em: #{h(yield(:title) || 'Sem titulo')}" %></title>
-    <%= stylesheet_link_tag 'application','menu_css' %>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+    <title><%= "SGI - SEDUC / PMA. Você está em: #{h(yield(:title) || 'Sem titulo')}" %></title>
+
+    
+    <%= stylesheet_link_tag 'application','menu' %>
     <%= stylesheet_link_tag '/javascripts/plugins/flexigrid/css/flexigrid.css' %>
     <%= stylesheet_link_tag 'colorbox','geral',"jquery.tooltip.css","pepper-grinder/jquery-ui-1.8.16.custom","jquery.multiselect","ui.selectmenu" %>
     <%= javascript_include_tag 'jquery-1.7','jquery.bgiframe.js','jquery.dimensions.js','jquery.tooltip.js','jquery-ui-1.8.16.custom.min',"jquery.ui.datetimepicker.min","jquery-ui-i18n.min",'jrails',"jquery.colorbox","colorbox.js","jquery.multiselect.min","ui.selectmenu",'plugins/flexigrid/js/flexigrid.pack','application.js' %>
     <%= yield(:head) %>
   </head>
-  <body>
-        <div id="topo">
-          <%- flash.each do |name, msg| -%>
-            <%= content_tag :div, msg, :id => "flash_#{name}" %>
-          <%- end -%>
-          <div class="nav">
-            <div class="table">
-            </div>
-              <ul id="menu" class="select">
-                <li><a href="#"><b>Arquivo</b></a>
-                  <div class="select_sub">
-                    <ul class="sub">
-                      <li><%= link_to "Home", root_path %></li>
-                      <li><%= link_to "Sair", logout_path %></li>
-                    </ul>
-                  </div>
-                </li>
-                 <% if current_user.has_role?('admin') and current_user.has_role?('escola') or  current_user.has_role?('responsavel')%>
-                <li><a href="#"><b>Cadastros</b></a>
-                  <div class="select_sub">
-                    <ul class="sub">
-                        <li><%= link_to "Dicio. & Enciclo.", new_dicionario_enciclopedia_path %></li>
-                        <li><%= link_to "Jogos", new_jogo_path %></li>
-                        <li><%= link_to "Livros", new_livro_path %></li>
-                        <li><%= link_to "Mapas", new_mapa_path %></li>
-                        <li><%= link_to "Mídias", new_midia_path %></li>
-                        <li><%= link_to "Periodicos" %></li>
-                        <% if current_user.has_role?('admin') %>
-                          <li><%= link_to "Autores", new_autor_path %></li>
-                          <li><%= link_to "Assuntos", new_assunto_path %></li>
-                        <%end%>
-                    </ul>
-                  </div>
+
+<body>
+
+ <div id="contents">
+  <div id="informacao">
+    <% unless informativos_corrente.empty? %>
+     <div id="announcement">
+      <table class="tabelas">
+        <td>
+          <p><h2 align="center">Quadro de Avisos</h2></p>
+          <div id="color"  align="center">
+            <%for informativo in informativos_corrente %>
+            <p><%= informativo.mensagem %></p>
+            <p>===============================================================================================</p>
+            <%end%>
+        </td>
+     </table>
+    </div>
+   <h3 align="center"><b><%= link_to_remote("Ocultar esta mensagem", :url => {:controller => 'javascripts', :action => 'hide_announcement'}) %></b></h3>
+  </div>
+   <%end%>
+</div>
+
+<div id="header">
+ <br/>
+  <div id="topo"></div>
+
+    <%if logged_in? then%>
+      <font size="4" color="green"><%= link_to h(current_user.login.capitalize), edit_user_path(current_user) %>  </font>
+      <% if current_user.has_role?('admin') %>
+       Acesso de Administrador do Sistema<font size="1"> .............................................</font> <font size ="2"><b>Americana, <%= Time.now.strftime("%d de %B de %Y") %></b></font>
+      <%else%>
+         <% if current_user.has_role?('bibliotecario') %>
+            Acesso de Bibliotecario(a)
+         <%else%>
+            <% if current_user.has_role?('SEDUC') %>
+                  Acesso de Funcinário(a) SEDUC
+            <%else%>
+               <% if current_user.has_role?('estagiario') %>
+                     Acesso de  Estagiário(a)
+               <%else%>>
+                     Acesso de  Usuário(a)
+              <%end%>
+            <%end%>
+         <%end%>
+     <%end%>
+   <font style="color: red"><%= flash[:notice] %></font>
+   <%else%>
+      <%= link_to '|Entrar|', login_path %>
+        <font style="color: red"><%= flash[:notice] %></font>
+   <%end%>
+ </div>
+ <div class="nav">
+   <div class="nav-container-outer">
+     <img src="/stylesheets/images/nav-bg-l.jpg" alt="" class="float-left" />
+     <img src="/stylesheets/images/nav-bg-r.jpg" alt="" class="float-right" />
+            <ul id="nav-container" class="nav-container">
+              <li><a class="item-primary" href="#">Arquivo</a>
+                <ul style="width:108px;">
+                  <li><%= link_to 'Inicio', root_path %></li>
+                  <li><%= link_to 'Sair', logout_path,:confirm => "Tem certeza que deseja fazer logout?" %></li>
+                </ul>
+              </li>
+              <li><span class="divider divider-vert" ></span></li>
+              <li><a class="item-primary" href="#;">Acervo</a>
+                 <ul style="width:108px;">
+                   <% if current_user.has_role?('admin') or current_user.has_role?('bibliotecario') %>
+                    <li><a href="#"><b>Cadastrar</b></a>
+                         <ul>
+                          <li><%= link_to "Dicio. & Enciclo.", new_dicionario_enciclopedia_path %></li>
+                          <li><%= link_to "Jogos", new_jogo_path %></li>
+                          <li><%= link_to "Livros", new_livro_path %></li>
+                          <li><%= link_to "Mapas", new_mapa_path %></li>
+                          <li><%= link_to "Mídias", new_midia_path %></li>
+                          <li><%= link_to "Periodicos" %></li>
+                            <% if current_user.has_role?('admin') %>
+                               <li><%= link_to "Autores", new_autor_path %></li>
+                            <%end%>
+                        </ul>
+                     </li>
                   <%end%>
-                </li>
-                <li><a href="#"><b>Consulta</b></a>
-                  <div class="select_sub">
-                    <ul class="sub">
-                      <li><%= link_to "Dicio. & Enciclo.", consultaDic_path %></li>
-                      <li><%= link_to "Jogos", consultaJog_path %></li>
-                      <li><%= link_to "Livros", consultaLiv_path %></li>
-                      <li><%= link_to "Mapas", consultaMap_path %></li>
-                      <li><%= link_to "Mídias", consultaMid_path %></li>
-                      <li> | </li>
-                      <li><%= link_to "Autores/Livros", consultaAutLiv_path %></li>
-                      <li><%= link_to "Áreas/Livros", consultaAreLiv_path %></li>
-                      <li><%= link_to "Assuntos/Livros", consultaAsuLiv_path %></li>
-                      <li><%= link_to "Editoras/Livros", consultaEdiLiv_path %></li>
-                      <li><%= link_to "Músicas", consultaMus_path %></li>
-                      <li><%= link_to "Cantores/Musicas", consultaCanMus_path %></li>
-                      <li><%= link_to "Títulos", consultaTit_path %></li>
-                    </ul>
-                  </div>
-                </li>
-                <% if current_user.has_role?('admin') and current_user.has_role?('escola') or  current_user.has_role?('responsavel')%>
-                <li><a href="#"><b>Procedimentos</b></a>
-                  <div class="select_sub">
-                    <ul class="sub">
-                      <li><%= link_to "Novo Empréstimo", new_emprestimo_path %></li>
-                      <li><%= link_to "Devolução", ativos_emprestimos_path %></li>
-                      <li><%= link_to "Devolução por tombo", busca_emprestimo_emprestimos_path %></li>
-                    </ul>
-                  </div>
-                </li>
-                <%end%>
-                <% if current_user.has_role?('admin') or current_user.has_role?('escola')  %>
-                <li><a href="#"><b>Gerenciamento</b></a>
-                  <div class="select_sub">
-                    <ul class="sub">
-                      <li><%= link_to "Associar Usuários", new_roles_user_path %></li>
-                      <li><%= link_to 'Gerenciar Usuários', roles_users_path %></li>
-                      <li><%= link_to 'Log', tombos_path %></li>
-                      <li> __ </li>
-                      <li><%= link_to "Autores", consultaAut_path %></li>
-                      <li><%= link_to "Áreas", consultaAre_path %></li>
-                      <li><%= link_to "Assuntos", consultaAsu_path %></li>
-                      <li><%= link_to "Cantores", consultaCan_path %></li>
-                      <li><%= link_to "Editoras", consultaEdi_path %></li>
-                      <li><%= link_to "Gêneros", consultaGen_path %></li>
-                      <li><%= link_to "Músicas", consultaMus_path %></li>
-                      <li><%= link_to "Títulos", consultaTit_path %></li
-                    </ul>
-                  </div>
-                </li>
-                <%end%>
-              </ul>
-          </div>
-        </div>
+                     <li><a>Consultar</a>
+                        <ul>
+                           <li><%= link_to "Dicio.& Enciclo.", consultaDic_path %></li>
+                           <li><%= link_to "Jogos", consultaJog_path %></li>
+                           <li><%= link_to "Livros", consultaLiv_path %></li>
+                           <li><%= link_to "Mapas", consultaMap_path %></li>
+                           <li><%= link_to "Mídias", consultaMid_path %></li>
+                           <li><%= link_to "Músicas", consultaMus_path %></li>
+                           <li><%= link_to "Títulos", consultaTit_path %></li>
+                           <li><span class="divider divider-horiz" ></span></li>
+                           <li><%= link_to "Autores/Livros", consultaAutLiv_path %></li>
+                           <li><%= link_to "Áreas/Livros", consultaAreLiv_path %></li>
+                           <li><%= link_to "Assuntos/Livros", consultaAsuLiv_path %></li>
+                           <li><%= link_to "Editoras/Livros", consultaEdiLiv_path %></li>
+                           <li><%= link_to "Cantores/Musicas", consultaCanMus_path %></li>
+                          </ul>
+                      </li>
+                 </ul>
+              </li>
+              <% if current_user.has_role?('admin') and current_user.has_role?('escola') or  current_user.has_role?('responsavel')%>
+              <li><span class="divider divider-vert" ></span></li>
+              <li><a class="item-primary" href="#;">Operações</a>
+                 <ul style="width:108px;">
+                   <% if current_user.has_role?('admin') or current_user.has_role?('bibliotecario') %>
+                    <li><a href="#"><b>Emprestimos</b></a>
+                         <ul>
+                           <li><%= link_to "Alunos", new_emprestimo_path %> </li>
+                           <li><%= link_to "Funcionarios"%></li>
+                        </ul>
+                     </li>
+                  <%end%>
+                     <li><a>Devolução</a>
+                        <ul>
+                          <li><%= link_to "Por Aluno"%></li>
+                          <li><%= link_to "Por Classe"%></li>
+                          <li><%= link_to "Por Emprestimo"%></li>
+                          <li><%= link_to "Por Título"%></li>
+                          <li><%= link_to "Por Tombo"%></li>
+                          </ul>
+                      </li>
+                 </ul>
+              </li>
+             <%end%>
+              <% if current_user.has_role?('admin') and current_user.has_role?('escola') or  current_user.has_role?('responsavel')%>
+              <li><span class="divider divider-vert" ></span></li>
+              <li><a class="item-primary" href="#;">Gerenciamento</a>
+                 <ul style="width:108px;">
+                   <% if current_user.has_role?('admin') or current_user.has_role?('bibliotecario') %>
+                    <li><a href="#"><b>Tabelas</b></a>
+                         <ul>
+                          <li><%= link_to "Autores", consultaAut_path %></li>
+                          <li><%= link_to "Áreas", consultaAre_path %></li>
+                          <li><%= link_to "Assuntos", consultaAsu_path %></li>
+                          <li><%= link_to "Cantores", consultaCan_path %></li>
+                          <li><%= link_to "Editoras", consultaEdi_path %></li>
+                          <li><%= link_to "Gêneros", consultaGen_path %></li>
+                          <li><%= link_to "Músicas", consultaMus_path %></li>
+                          <li><%= link_to "Títulos", consultaTit_path %></li>
+                        </ul>
+                     </li>
+                  <%end%>
+                     <li><a>Usuários</a>
+                        <ul>
+                          <li><%= link_to "Associar", new_roles_user_path %></li>
+                          <li><%= link_to 'Gerenciar', roles_users_path %></li>
+                          <li><%= link_to 'Log', tombos_path %></li>
+                        </ul>
+                     </li>
+                     <li><a>Classes</a>
+                        <ul>
+                          <li></li>
+                        </ul>
+                     </li>
+                 </ul>
+              </li>
+             <%end%>
+       </ul>
+     </div>
+   </div>
+   <div id="principal">
+     <div id="conteudo">
+        <%= yield  %>
+     </div>
+   </div>
+   <div id="rodape">
+     © 2011 . Prefeitura de Americana - SEDUC - Todos os Direitos Reservados.
+   </div>
 
-        <div id="esquerda">
-          <% unless logged_in? %>
-            <% form_tag session_path do -%>
-            <font  size="2">
-             <p><%= label_tag 'Usuário' %><br />
-                <%= text_field_tag 'login', @login %></p>
-
-            <p><%= label_tag 'Senha' %><br/>
-               <%= password_field_tag 'password', nil %></p>
-            </font>
-            <p><%= submit_tag 'Entrar' %></p>
-            <% end %>
-          <%end%>
-        </div>
-                <div id="colCentral">
-                  <div id="container">
-                    <%- if show_title? -%>
-                      <h1><%=h yield(:title) %></h1>
-                    <%- end -%>
-                    <%= yield %>
-                  </div>
-                </div>
-  </body>
+ </body>
 </html>

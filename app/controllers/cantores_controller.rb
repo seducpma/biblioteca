@@ -6,7 +6,7 @@ class CantoresController < ApplicationController
   # GET /cantores
   # GET /cantores.xml
   def index
-    @cantores = Cantor.paginate :page => params[:page], :order => 'nome ASC', :per_page => 10
+    @cantores = Cantor.paginate :page => params[:page], :order => 'nome ASC', :per_page => 20
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @cantores }
@@ -90,7 +90,7 @@ def consultaCan
   unless params[:search].present?
     if params[:type_of].to_i == 3
       @contador = Cantor.all.count
-      @cantores = Cantor.paginate :all,:page => params[:page], :order => 'nome ASC', :per_page => 10
+      @cantores = Cantor.paginate :all,:page => params[:page], :order => 'nome ASC', :per_page => 20
       render :update do |page|
         page.replace_html 'cantores', :partial => "cantores"
       end
@@ -98,7 +98,7 @@ def consultaCan
   else
     if params[:type_of].to_i == 1
       @contador = Cantor.all(:conditions => ["nome like ?", "%" + params[:search].to_s + "%"]).count
-      @cantores = Cantor.paginate :page => params[:page], :per_page => 10, :conditions => ["nome like ?", "%" + params[:search].to_s + "%"],:order => 'nome ASC'
+      @cantores = Cantor.paginate :page => params[:page], :per_page => 20, :conditions => ["nome like ?", "%" + params[:search].to_s + "%"],:order => 'nome ASC'
       render :update do |page|
         page.replace_html 'cantores', :partial => "cantores"
       end

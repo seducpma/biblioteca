@@ -4,7 +4,7 @@ class PeriodicosController < ApplicationController
   before_filter :load_resources
 
   def index
-    @periodicos = Periodico.paginate :page => params[:page], :order => 'titulo ASC', :per_page => 10
+    @periodicos = Periodico.paginate :page => params[:page], :order => 'titulo ASC', :per_page => 20
     
   end
 
@@ -67,16 +67,16 @@ class PeriodicosController < ApplicationController
 def consultaPer
  if (params[:search].nil? || params[:search].empty?)
    $t=01;
-    #@periodicos = Periodico.paginate :page => params[:page], :order => 'titulo ASC', :per_page => 10
-    @periodicos = Periodico.paginate :page => params[:page], :per_page => 10, :conditions => ["titulo like ? ", ""],:order => 'titulo ASC'
+    #@periodicos = Periodico.paginate :page => params[:page], :order => 'titulo ASC', :per_page => 20
+    @periodicos = Periodico.paginate :page => params[:page], :per_page => 20, :conditions => ["titulo like ? ", ""],:order => 'titulo ASC'
  else if params[:type_of].to_i == 1
        $t=0;
-       @periodicos = Periodico.paginate :page => params[:page], :per_page => 10, :conditions => ["titulo like ? and periodicidade =?", "%" + params[:search].to_s + "%", "DIARIO"],:order => 'titulo ASC'
+       @periodicos = Periodico.paginate :page => params[:page], :per_page => 20, :conditions => ["titulo like ? and periodicidade =?", "%" + params[:search].to_s + "%", "DIARIO"],:order => 'titulo ASC'
      else if params[:type_of].to_i == 2
          $t=0;
-         @periodicos = Periodico.paginate :page => params[:page], :per_page => 10, :conditions => ["subtitulo like ? ", "%" + params[:search].to_s + "%"],:order => 'subtitulo ASC'
+         @periodicos = Periodico.paginate :page => params[:page], :per_page => 20, :conditions => ["subtitulo like ? ", "%" + params[:search].to_s + "%"],:order => 'subtitulo ASC'
       else
-         @periodicos = Periodico.paginate :page => params[:page], :per_page => 10, :order => 'titulo ASC'
+         @periodicos = Periodico.paginate :page => params[:page], :per_page => 20, :order => 'titulo ASC'
      end
     end
   end

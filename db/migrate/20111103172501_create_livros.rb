@@ -14,6 +14,8 @@ class CreateLivros < ActiveRecord::Migration
       t.string :local_edicao
       t.text :resumo
       t.text :obs
+      t.string :tipo
+      t.boolean :status, :default => 1
       t.timestamps
     end
   end

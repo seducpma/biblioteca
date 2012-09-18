@@ -1,9 +1,13 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :classes
+
+
+
+  map.resources :informativos
   map.resources :tombos,:only => [:index], :collection => {:usuario => :get, :livros_diarios => :get,:de_diarios => :get}
   map.resources :logs
   map.resources :consultas,:only => [:index] , :collection => {:global => :get,:gerar_tombos => :get,:criar_consulta => :get, :lista_tombo => :get}
   map.resources :midias, :collection => {:midias_cadastradas => :get}
-
   map.resources :musicas
   map.resources :cantores
   map.resources :generos
@@ -72,6 +76,11 @@ ActionController::Routing::Routes.draw do |map|
   map.home '', :controller => 'home', :action => 'index'
   map.root :controller => "home"
 
+
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
+
+
+  map.geo "/geos/geo/:id", :controller => "geos", :action => "geo"
+ 
 end

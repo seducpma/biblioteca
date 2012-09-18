@@ -21,13 +21,13 @@ class EmprestimosController < ApplicationController
     end
   end
    if (filtro.to_i == 2)
-     @disponiveis = Dpu.all(:include => [{:dicionario_enciclopedia =>[:identificacao],:livro =>[:identificacao]}],:conditions => ["(dicionario_enciclopedia_id is not null or livro_id is not null) and status = 1 and unidade_id = ?", current_user.unidade_id],:order => 'livro ASC')
+     @disponiveis = Dpu.all(:include => [{:dicionario_enciclopedia =>[:identificacao],:livro =>[:identificacao]}],:conditions => ["(dpus.dicionario_enciclopedia_id is not null or dpus.livro_id is not null) and dpus.status = 1 and dpus.unidade_id = ?", current_user.unidade_id],:order => 'identificacaos.livro ASC')
    else
      if filtro.to_i == 0
-       @disponiveis = Dpu.all(:include => [:livro =>[:identificacao]],:conditions => ["(livro_id is not null) and status = 1 and unidade_id = ?", current_user.unidade_id], :order => 'livro ASC')
+       @disponiveis = Dpu.all(:include => [:livro =>[:identificacao]],:conditions => ["(dpus.livro_id is not null) and dpus.status = 1 and dpus.unidade_id = ?", current_user.unidade_id], :order => 'identificacaos.livro ASC')
      else
        if filtro.to_i == 1
-         @disponiveis = Dpu.all(:include => [:dicionario_enciclopedia =>[:identificacao]],:conditions => ["(dicionario_enciclopedia_id is not null) and status = 1 and unidade_id = ?", current_user.unidade_id],:order => 'livro ASC')
+         @disponiveis = Dpu.all(:include => [:dicionario_enciclopedia =>[:identificacao]],:conditions => ["(dpus.dicionario_enciclopedia_id is not null) and dpus.status = 1 and dpus.unidade_id = ? and dpus.dicionario_enciclopedia_id is not null", current_user.unidade_id],:order => 'identificacaos.livro ASC')
        end
      end
    end
@@ -45,7 +45,7 @@ class EmprestimosController < ApplicationController
     @emprestimo.unidade_id = current_user.unidade_id
     @emprestimo.pessoa = session[:pessoa]
     @emprestimo.tipo_emprestimo = params[:type]
-    if (session[:pessoa]).present?     
+    if (session[:pessoa]).present?
       if @emprestimo.save
 #        Log.gera_log("CRIACAO", "EMPRESTIMO", current_user.id , @emprestimo.id)
         flash[:notice] = "EMPRÉSTIMO REALIZADO COM SUCESSO."
@@ -101,7 +101,7 @@ class EmprestimosController < ApplicationController
     end
     render :update do |page|
       page.replace_html 'devolucao', :partial => "emprestimo_ativo"
-    end 
+    end
   end
 
   def busca
@@ -117,7 +117,7 @@ class EmprestimosController < ApplicationController
         @pessoas = Aluno.all(:conditions => ["(classe_ano = ? or classe_ano is null) and id_classe = ?",session[:ano_letivo].to_i, session[:classe].to_i])
        else
         @pessoas = Aluno.all(:conditions => ["(classe_ano = ? or classe_ano is null and id_escola = ? and id_classe = ?)",session[:ano_letivo].to_i, current_user.unidade.unidades_gpd_id, session[:classe].to_i])
-       end        
+       end
       end
       #@alunos = Aluno.all(:conditions => ["(classe_ano = 2011 or classe_ano is null) and (primeiro_nome(nome,1) = primeiro_nome('JOAO',1) and pes_dtnasc = '2002-01-06')",])
       render :update do |page|
@@ -197,7 +197,7 @@ class EmprestimosController < ApplicationController
   def efetiva_devolver
     @devolucao = Emprestimo.find(params[:id])
     @devolucao.status = 0
-    if @devolucao.save      
+    if @devolucao.save
       flash[:notice] = "DEVOLUÇÃO EFETUADA COM SUCESSO."
       redirect_to @devolucao
     end

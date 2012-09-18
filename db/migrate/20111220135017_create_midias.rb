@@ -12,6 +12,7 @@ class CreateMidias < ActiveRecord::Migration
       t.string :local_producao
       t.datetime :data_producao
       t.string :obs
+      t.boolean :status, :default => 1
 
       t.timestamps
     end

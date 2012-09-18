@@ -66,7 +66,7 @@ def consultaMap
  unless params[:search].present?
    if params[:type_of].to_i == 3
      @contador = Mapa.all(:include => [:localizacao],:conditions => ["unidade_id = ?", current_user.unidade_id]).count
-     @mapas = Mapa.paginate :all,:include => [:localizacao],:conditions => ["localizacoes.unidade_id = ?",current_user.unidade_id], :page => params[:page], :per_page => 10,:order => 'titulo ASC'
+     @mapas = Mapa.paginate :all,:include => [:localizacao],:conditions => ["localizacoes.unidade_id = ?",current_user.unidade_id], :page => params[:page], :per_page => 20,:order => 'titulo ASC'
      render :update do |page|
        page.replace_html 'mapas', :partial => "mapas"
      end
@@ -74,13 +74,13 @@ def consultaMap
  else
     if params[:type_of].to_i == 1
        @contador = Mapa.all(:include => [:localizacao],:conditions => ["titulo like ? and localizacoes.unidade_id = ?", "%" + params[:search].to_s + "%",current_user.unidade_id]).count
-       @mapas = Mapa.paginate(:all,:include => [:localizacao], :page => params[:page], :per_page => 10, :conditions => ["subtitulo like ? and localizacoes.unidade_id = ?", "%" + params[:search].to_s + "%",current_user.unidade_id],:order => 'titulo ASC')
+       @mapas = Mapa.paginate(:all,:include => [:localizacao], :page => params[:page], :per_page => 20, :conditions => ["subtitulo like ? and localizacoes.unidade_id = ?", "%" + params[:search].to_s + "%",current_user.unidade_id],:order => 'titulo ASC')
         render :update do |page|
           page.replace_html 'mapas', :partial => "mapas"
         end
       else if params[:type_of].to_i == 2
         @contador = Mapa.all(:include => [:localizacao],:conditions => ["subtitulo like ?", "%" + params[:search].to_s + "%"]).count
-        @mapas = Mapa.paginate(:all, :include =>[:localizacao], :page => params[:page], :per_page => 10, :conditions => ["subtitulo like ? and localizacoes.unidade_id = ?", "%" + params[:search].to_s + "%", current_user.unidade_id],:order => 'titulo ASC')
+        @mapas = Mapa.paginate(:all, :include =>[:localizacao], :page => params[:page], :per_page => 20, :conditions => ["subtitulo like ? and localizacoes.unidade_id = ?", "%" + params[:search].to_s + "%", current_user.unidade_id],:order => 'titulo ASC')
           render :update do |page|
             page.replace_html 'mapas', :partial => "mapas"
           end

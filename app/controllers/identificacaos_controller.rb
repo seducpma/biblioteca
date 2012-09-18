@@ -1,6 +1,6 @@
 class IdentificacaosController < ApplicationController
   def index
-    @identificacaos = Identificacao.paginate :page => params[:page], :order => 'livro ASC', :per_page => 10
+    @identificacaos = Identificacao.paginate :page => params[:page], :order => 'livro ASC', :per_page => 20
    
   end
 
@@ -47,7 +47,7 @@ def consultaTit
   unless params[:search].present?
     if params[:type_of].to_i == 3
       @contador = Identificacao.all.count
-      @identificacaos = Identificacao.paginate :all,:page => params[:page], :order => 'livro ASC', :per_page => 10
+      @identificacaos = Identificacao.paginate :all,:page => params[:page], :order => 'livro ASC', :per_page => 20
       render :update do |page|
         page.replace_html 'titulos', :partial => "titulos"
       end
@@ -55,13 +55,13 @@ def consultaTit
   else
     if params[:type_of].to_i == 1
       @contador = Identificacao.all(:conditions => ["livro like ?", "%" + params[:search].to_s + "%"]).count
-      @identificacaos = Identificacao.paginate :all, :page => params[:page], :per_page => 10, :conditions => ["livro like ?", "%" + params[:search].to_s + "%"],:order => 'livro ASC'
+      @identificacaos = Identificacao.paginate :all, :page => params[:page], :per_page => 20, :conditions => ["livro like ?", "%" + params[:search].to_s + "%"],:order => 'livro ASC'
       render :update do |page|
         page.replace_html 'titulos', :partial => "titulos"
       end
       else if params[:type_of].to_i == 2
         @contador = Identificacao.all(:conditions => ["subtitulo like ?", "%" + params[:search].to_s + "%"]).count
-        @identificacaos = Identificacao.paginate :all, :page => params[:page], :per_page => 10, :conditions => ["subtitulo like ?", "%" + params[:search].to_s + "%"],:order => 'livro ASC'
+        @identificacaos = Identificacao.paginate :all, :page => params[:page], :per_page => 20, :conditions => ["subtitulo like ?", "%" + params[:search].to_s + "%"],:order => 'livro ASC'
         render :update do |page|
           page.replace_html 'titulos', :partial => "titulos"
         end

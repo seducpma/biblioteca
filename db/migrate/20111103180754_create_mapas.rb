@@ -3,6 +3,7 @@ class CreateMapas < ActiveRecord::Migration
     create_table :mapas do |t|
       t.references :editora
       t.references :localizacao
+      t.string :titulo
       t.string :tombo_seduc
       t.string :tombo_l
       t.string :tipo
@@ -13,6 +14,7 @@ class CreateMapas < ActiveRecord::Migration
       t.string :local_edicao
       t.string :edicao
       t.text :obs
+      t.boolean :status, :default => 1
       t.timestamps
     end
   end

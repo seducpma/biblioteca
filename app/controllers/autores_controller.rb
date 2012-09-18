@@ -3,7 +3,7 @@ class AutoresController < ApplicationController
  before_filter :load_resources
 
   def index
-    @autores = Autor.paginate :page => params[:page], :order => 'nome ASC', :per_page => 10
+    @autores = Autor.paginate :page => params[:page], :order => 'nome ASC', :per_page => 20
     
   end
 
@@ -51,7 +51,7 @@ def consultaAut
   unless params[:search].present?
     if params[:type_of].to_i == 3
       @contador = Autor.all.count
-      @autores = Autor.paginate :all,:page => params[:page], :order => 'nome ASC', :per_page => 10
+      @autores = Autor.paginate :all,:page => params[:page], :order => 'nome ASC', :per_page => 22
       render :update do |page|
         page.replace_html 'autores', :partial => "autores"
       end
@@ -59,7 +59,7 @@ def consultaAut
   else
     if params[:type_of].to_i == 1
       @contador = Autor.all(:conditions => ["nome like ?", "%" + params[:search].to_s + "%"]).count
-      @autores = Autor.paginate :all, :page => params[:page], :per_page => 10, :conditions => ["nome like ?", "%" + params[:search].to_s + "%"],:order => 'nome ASC'
+      @autores = Autor.paginate :all, :page => params[:page], :per_page => 20, :conditions => ["nome like ?", "%" + params[:search].to_s + "%"],:order => 'nome ASC'
       render :update do |page|
         page.replace_html 'autores', :partial => "autores"
       end

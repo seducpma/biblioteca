@@ -53,7 +53,7 @@ class LivrosController < ApplicationController
 
 
       #@livro = Identificacao.all :order => 'livro ASC'
-      #@livros = Livro.paginate :all, :page => params[:page], :per_page => 10
+      #@livros = Livro.paginate :all, :page => params[:page], :per_page => 20
 
     #@livro_hash = []
     #@livro.each do |id|

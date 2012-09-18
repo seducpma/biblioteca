@@ -23,7 +23,7 @@ class Livro < ActiveRecord::Base
   validates_presence_of :localizacao_id, :message => "Campo obrigatório"
   validates_presence_of :assunto_ids, :message => "Campo obrigatório"
   
-
+   TIPO = %w(LIVRO DICIONÁRIO ENCICLOPÉDIA OUTROS)
 
   def qtd_dif_num?
     qtd = self.lista_tombos.split(";")

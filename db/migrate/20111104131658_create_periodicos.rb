@@ -14,6 +14,7 @@ class CreatePeriodicos < ActiveRecord::Migration
       t.string :local_producao
       t.date :data_producao
       t.string :obs
+      t.boolean :status, :default => 1
       t.timestamps
     end
   end

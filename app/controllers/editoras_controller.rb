@@ -3,7 +3,7 @@ class EditorasController < ApplicationController
   before_filter :load_resources
 
   def index
-    @editoras = Editora.paginate :page => params[:page], :order => 'nome ASC', :per_page => 10
+    @editoras = Editora.paginate :page => params[:page], :order => 'nome ASC', :per_page => 20
 
   end
 
@@ -50,7 +50,7 @@ def consultaEdi
   unless params[:search].present?
     if params[:type_of].to_i == 3
       @contador = Editora.all.count
-      @editoras = Editora.paginate :all,:page => params[:page], :order => 'nome ASC', :per_page => 10
+      @editoras = Editora.paginate :all,:page => params[:page], :order => 'nome ASC', :per_page => 20
       render :update do |page|
         page.replace_html 'editoras', :partial => "editoras"
       end
@@ -58,7 +58,7 @@ def consultaEdi
   else
     if params[:type_of].to_i == 1
       @contador = Editora.all(:conditions => ["nome like ?", "%" + params[:search].to_s + "%"]).count
-      @editoras = Editora.paginate :all, :page => params[:page], :per_page => 10, :conditions => ["nome like ?", "%" + params[:search].to_s + "%"],:order => 'nome ASC'
+      @editoras = Editora.paginate :all, :page => params[:page], :per_page => 20, :conditions => ["nome like ?", "%" + params[:search].to_s + "%"],:order => 'nome ASC'
       render :update do |page|
         page.replace_html 'editoras', :partial => "editoras"
       end

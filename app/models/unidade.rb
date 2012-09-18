@@ -10,7 +10,6 @@ class Unidade < ActiveRecord::Base
   has_many :emprestimos
   has_many :possuis
   has_many :dpus
-
   def simplificada
     truncate(self.nome, :length=> 50)
   end

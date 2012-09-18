@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  classe: MyString
+  professor: MyString
+  ano: 2012-09-14 08:50:01
+  unidade: 
+  obs: MyString
+
+two:
+  classe: MyString
+  professor: MyString
+  ano: 2012-09-14 08:50:01
+  unidade: 
+  obs: MyString

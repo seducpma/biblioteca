@@ -9,6 +9,7 @@ class CreateJogos < ActiveRecord::Migration
       t.string :tipo
       t.string :fabricante
       t.string :obs
+      t.boolean :status, :default => 1
       t.timestamps
     end
   end

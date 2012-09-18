@@ -12,7 +12,7 @@
            <%if emprestimo.status == true %>
               <tr>
                 <td align="left"><%=h emprestimo.id%></td>
-                <td align="left"><%=h emprestimo.emprestado_para %></td>
+                <td align="left"><%=h emprestimo.nome %></td>
                 <td align="left"><%=h "#{emprestimo.dias_atrasados} dias" %></td>
                 <td align="left"><%=h emprestimo.data_devolucao.strftime("%d/%m/%Y") %></td>
                 <td align="left"><%=h emprestimo.seu_status? %></td>

@@ -41,7 +41,7 @@
         <%if @livro.identificacao_id.present?%>
           <%= @livro.identificacao.livro%>
         <%else%>
-          <a class='inline' href="#inline_busca"><div id="identificacao">Selecionar Título</div></a>
+          <a class='inline' href="#inline_busca" ><div id="identificacao">Selecionar Título</div></a>
         <%end%>
       </td>
     </tr>
@@ -55,10 +55,20 @@
       </td>
     </tr>
     <tr>
-      <td colspan="3">
-        <b><%= f.label :colecao, "Coleção:" %></b><br />
-        <%= f.text_field :colecao, :size => "55" %>
+      <td>
+        <b><%= f.label :colecao, "Coleção:" %></b>
       </td>
+      <td><b>Tipo:</b>
+      </td>
+    </tr>  
+    <tr>
+      <td>
+        <%= f.text_field :colecao, :size => "40" %>
+      </td>
+      <td>
+        <%= f.select :tipo, Livro::TIPO%>
+      </td>
+
     </tr>
     <tr>
       <td colspan="3">
@@ -94,7 +104,7 @@
       </td>
       <td colspan="2">
         <br />
-        <%= f.text_field :edicao, :size => "1" %><b>ª<%= f.label :edicao, " Edição" %></b>
+        <%= f.text_field :edicao, {:value => '1', :size => "1"} %><b>ª<%= f.label :edicao, " Edição" %></b>
         - <b><%= f.label :data_edicao, "Data:" %></b>
         <%= f.date_select(:data_edicao, :order => [:year], :start_year => (Date.today.year)-50) %>
      </td>

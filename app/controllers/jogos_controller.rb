@@ -4,7 +4,7 @@ class JogosController < ApplicationController
   before_filter :load_resources
 
   def index
-    @jogos = Jogo.paginate :page => params[:page], :order => 'nome ASC', :per_page => 10
+    @jogos = Jogo.paginate :page => params[:page], :order => 'nome ASC', :per_page => 20
 
   end
 
@@ -99,7 +99,7 @@ def consultaJog
  unless params[:search].present?
    if params[:type_of].to_i == 3
      @contador = Jogo.find(:all, :order => 'nome ASC')
-     @jogos = Jogo.paginate :all, :page => params[:page], :per_page => 10,:order => 'nome ASC'
+     @jogos = Jogo.paginate :all, :page => params[:page], :per_page => 20,:order => 'nome ASC'
      render :update do |page|
        page.replace_html 'jogos', :partial => "jogos"
      end
@@ -107,13 +107,13 @@ def consultaJog
  else
     if params[:type_of].to_i == 1
         @contador = Jogo.find(:all, :conditions => ["nome like ? ", "%" + params[:search].to_s + "%"],:order => 'nome ASC')
-        @jogos = Jogo.paginate :all,:page => params[:page], :per_page => 10, :conditions => ["nome like ? ", "%" + params[:search].to_s + "%"],:order => 'nome ASC'
+        @jogos = Jogo.paginate :all,:page => params[:page], :per_page => 20, :conditions => ["nome like ? ", "%" + params[:search].to_s + "%"],:order => 'nome ASC'
         render :update do |page|
           page.replace_html 'jogos', :partial => "jogos"
         end
       else if params[:type_of].to_i == 2
         @contador = Jogo.find(:all, :conditions => ["faixa_etaria like ? ", "%" + params[:search].to_s + "%"],:order => 'nome ASC')
-        @jogos = Jogo.paginate :all, :page => params[:page], :per_page => 10, :conditions => ["faixa_etaria like ? ", "%" + params[:search].to_s + "%"],:order => 'nome ASC'
+        @jogos = Jogo.paginate :all, :page => params[:page], :per_page => 20, :conditions => ["faixa_etaria like ? ", "%" + params[:search].to_s + "%"],:order => 'nome ASC'
           render :update do |page|
             page.replace_html 'jogos', :partial => "jogos"
           end

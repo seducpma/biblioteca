@@ -1,0 +1,28 @@
+<p>
+  <b>Classe:</b>
+  <%=h @class.classe %>
+</p>
+
+<p>
+  <b>Professor:</b>
+  <%=h @class.professor %>
+</p>
+
+<p>
+  <b>Ano:</b>
+  <%=h @class.ano %>
+</p>
+
+<p>
+  <b>Unidade:</b>
+  <%=h @class.unidade %>
+</p>
+
+<p>
+  <b>Obs:</b>
+  <%=h @class.obs %>
+</p>
+
+
+<%= link_to 'Edit', edit_class_path(@class) %> |
+<%= link_to 'Back', classes_path %>

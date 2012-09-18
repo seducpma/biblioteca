@@ -14,15 +14,6 @@ body {
 	color:#99f;
 	text-align:center;
 }
-#rodape{
-	width:auto;
-    position:absolute;
-	top:530px;
-	left:260px;
-	color:#99f;
-	padding-bottom:20px;
-
-}
 #esquerda {
 	position:absolute;
 	width:220px;
