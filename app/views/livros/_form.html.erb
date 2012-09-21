@@ -72,26 +72,31 @@
     </tr>
     <tr>
       <td colspan="3">
-        <b><%= f.label :autor_id, "Autor(es). " %></b><br/>
         <b><i><font color="red" size="1">
-         (Caso não conste o nome do autor na lista abaixo, favor entrar em contato com a Informática SEDUC e solicitar a inclusão)
-      </font></i></b>
+         (Caso não conste o dado para seleção em AUTOR / AREA / EDITORA / ASSUNTOS , favor entrar em contato com a Informática SEDUC e solicitar a inclusão)
+      </font></i></b><br/>
+        <b><%= f.label :autor_id, "Autor(es). " %></b>
         <div id="autor"><%= render "shared/campos/campos_autor"%></div>
       </td>
     </tr>
     <tr>
-       <td colspan="3">
+       <td>
         <b><%= f.label :area_id,"Area: " %></b>
-        <b><i><font color="red" size="1">
-         (Caso não conste a Área na lista abaixo, favor entrar em contato com a Informática SEDUC e solicitar a inclusão)
-         </font></i></b><br/>
-        <%= f.collection_select :area_id ,@areas,:id,:nome, :include_blank => "--Selecionar--" %>
+       </td>
+       <td colspan="2">
+        <b><%= f.label :localizacao_id,"Localização: " %></b>
+        <%= link_to image_tag("/stylesheets/images/adicionar.png", :size => "12x12"), "#inline_local", :class =>"inline"%>
+       <b><i><font color="red" size="1">
+         (Clicar para criar nova LOCALIZAÇÃO)
+      </font></i></b>
+
       </td>
     </tr>
     <tr>
       <td>
-        <b><%= f.label :localizacao_id,"Localização: " %></b>
-        <%= link_to image_tag("/stylesheets/images/adicionar.png", :size => "12x12"), "#inline_local", :class =>"inline"%>
+        <%= f.collection_select :area_id ,@areas,:id,:nome, :include_blank => "--Selecionar--" %>
+      </td>
+      <td>
         <div id="local"><%= render "shared/campos/campos_local"%></div>
       </td>
       <td width="75%">
@@ -112,18 +117,17 @@
     <tr>
       <td colspan="3">
         <b><%= f.label :assunto_id, "Assunto(s). " %></b>
-        <%= link_to image_tag("/stylesheets/images/adicionar.png", :size => "12x12"), "#inline_assunto", :class =>"inline"%>
-      </td>
-      <div id="assuntos"><%= render "shared/campos/campos_assunto"%></div>
+        <div id="assuntos"><%= render "shared/campos/campos_assunto"%></div>
+     </td>
     </tr>
     <tr>
       <td>
         <b><%= f.label :resumo, 'Resumo:' %></b><br />
-        <%= f.text_area :resumo, :size => "34x3" %>
+        <%= f.text_area :resumo, :size => "38x2" %>
       </td>
       <td colspan="2">
         <b><%= f.label :obs, 'Observação:' %></b><br />
-        <%= f.text_area :obs, :size => "34x3" %>
+        <%= f.text_area :obs, :size => "38x2" %>
       </td>
     </tr>
     <tr>
