@@ -8,6 +8,32 @@ class EmprestimosController < ApplicationController
     @emprestimo = Emprestimo.find(params[:id])
   end
 
+  def busca_tombo
+    livro = Dpu.find(:all,:include => [:livro => [:localizacao]], :conditions => ["livros.tombo_l = ? and localizacoes.unidade_id = ?", params[:tombo], current_user.unidade_id])
+    if livro.count == 1
+      livro.each do |dpu|
+        realizado = EmpTemp.find_by_dpu_id(dpu.id)
+        unless realizado.present?
+          emptemp = EmpTemp.new
+            emptemp.dpu_id = dpu.id
+            emptemp.user_id = current_user
+          emptemp.save
+          render(:update) { |page| page.insert_html :bottom, 'descricao', :text => "<li id='#{dpu.id}'> - #{dpu.livro.identificacao.livro}</li>" }
+        else 
+          aviso_duplicado
+        end
+    end
+    else
+      aviso_duplicado
+    end
+  end
+
+  def aviso_duplicado
+     render :update do |page|
+       page.replace_html 'erro', :text => "Tombo duplicado ou inexistente"
+     end
+  end
+
   def filtros
   if params[:filtro_ambos].present?
     filtro = params[:filtro_ambos]
@@ -37,8 +63,9 @@ class EmprestimosController < ApplicationController
   end
 
 
-  def new
+  def new    
     @emprestimo = Emprestimo.new
+    session[:cart_livros] = Array.new
   end
   def create
     @emprestimo = Emprestimo.new(params[:emprestimo])
@@ -227,10 +254,10 @@ class EmprestimosController < ApplicationController
   protected
   def load_resources
     if current_user.unidade_id == 53
-      @classes = Aluno.all(:select => "id_classe, classe_descricao, classe_ano, id_escola",:conditions => ["classe_ano = ?", Date.today.strftime("%Y").to_i], :group => ["id_classe,classe_descricao, classe_ano,id_escola"] , :order => "classe_descricao")
+      #@classes = Aluno.all(:select => "id_classe, classe_descricao, classe_ano, id_escola",:conditions => ["classe_ano = ?", Date.today.strftime("%Y").to_i], :group => ["id_classe,classe_descricao, classe_ano,id_escola"] , :order => "classe_descricao")
     else
-      @classes = Aluno.all(:select => "id_classe, classe_descricao, classe_ano, id_escola",:conditions => ["classe_ano = ? and id_escola = ?", Date.today.strftime("%Y").to_i, current_user.unidade.unidades_gpd_id], :group => ["id_classe,classe_descricao, classe_ano,id_escola"] , :order => "classe_descricao")
+      #@classes = Aluno.all(:select => "id_classe, classe_descricao, classe_ano, id_escola",:conditions => ["classe_ano = ? and id_escola = ?", Date.today.strftime("%Y").to_i, current_user.unidade.unidades_gpd_id], :group => ["id_classe,classe_descricao, classe_ano,id_escola"] , :order => "classe_descricao")
     end
-     @disponiveis = Dpu.all(:include => [:livro =>[:identificacao]],:conditions => ["(dpus.livro_id is not null) and dpus.status = 1 and dpus.unidade_id = ?", current_user.unidade_id],:order => "identificacaos.livro ASC")
+     #@disponiveis = Dpu.all(:include => [:livro =>[:identificacao]],:conditions => ["(dpus.livro_id is not null) and dpus.status = 1 and dpus.unidade_id = ?", current_user.unidade_id],:order => "identificacaos.livro ASC")
   end
 end

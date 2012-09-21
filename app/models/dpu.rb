@@ -23,9 +23,6 @@ class Dpu < ActiveRecord::Base
       end
     end
   end
-  def verifica_estado
-    
-  end
   def devolve_livro(contador,emprestimo)
     emp = Emprestimo.find(emprestimo)
     if contador == 1
@@ -35,5 +32,17 @@ class Dpu < ActiveRecord::Base
     self.status = 1
     self.save
   end
+
+  def adiciona_livros(livro,user)
+    realizado = EmpTemp.find_by_dpu_id(livro.id)
+    unless realizado.present?
+      emptemp = EmpTemp.new
+        emptemp.dpu_id = livro.id
+        emptemp.user_id = user
+      emptemp.save
+    end
+  end
+
+
 
 end

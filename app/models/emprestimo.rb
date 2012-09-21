@@ -6,7 +6,8 @@ class Emprestimo < ActiveRecord::Base
   has_and_belongs_to_many :dpus
   belongs_to :unidade
   validate :unico
-  attr_accessor :dpu, :pessoa, :type, :filtro,:filtro_ambos
+  #attr_accessor :dpu, :pessoa, :type, :filtro,:filtro_ambos
+  attr_accessor :tombo
 
   Tipo = {'Funcionário' => 0, 'Aluno' => 1}
   Kind = {'Livro' => 0, 'Dicionario / enciclopedia' => 1}
