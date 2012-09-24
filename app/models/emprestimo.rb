@@ -7,7 +7,7 @@ class Emprestimo < ActiveRecord::Base
   belongs_to :unidade
   validate :unico
   #attr_accessor :dpu, :pessoa, :type, :filtro,:filtro_ambos
-  attr_accessor :tombo
+  attr_accessor :tombo, :pessoa, :type
 
   Tipo = {'Funcionário' => 0, 'Aluno' => 1}
   Kind = {'Livro' => 0, 'Dicionario / enciclopedia' => 1}
@@ -17,6 +17,14 @@ class Emprestimo < ActiveRecord::Base
     dpu_emprestada.each do |z|
       z.status = 0
       z.save
+    end
+  end
+
+  def exibe_nome
+    if self.funcionario.present?
+      Aluno.find(self.funcionario).nome
+    else
+      Aluno.find(self.aluno).nome
     end
   end
 

@@ -44,5 +44,4 @@ class Dpu < ActiveRecord::Base
   end
 
 
-
 end

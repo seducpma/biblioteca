@@ -120,8 +120,8 @@
                    <% if current_user.has_role?('admin') or current_user.has_role?('bibliotecario') %>
                     <li><a href="#"><b>Emprestimos</b></a>
                          <ul>
-                           <li><%= link_to "Alunos", new_emprestimo_path %> </li>
-                           <li><%= link_to "Funcionarios"%></li>
+                           <li><%= link_to "Alunos", new_emprestimo_path(:type => 1) %> </li>
+                           <li><%= link_to "Funcionarios", new_emprestimo_path(:type => 2)%></li>
                         </ul>
                      </li>
                   <%end%>
