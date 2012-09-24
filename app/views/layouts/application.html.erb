@@ -43,18 +43,18 @@
     <%if logged_in? then%>
       <font size="4" color="green"><%= link_to h(current_user.login.capitalize), edit_user_path(current_user) %>  </font>
       <% if current_user.has_role?('admin') %>
-       Acesso de Administrador do Sistema<font size="1"> .............................................</font> <font size ="2"><b>Americana, <%= Time.now.strftime("%d de %B de %Y") %></b></font>
+       Acesso de Administrador do Sistema<font size="1"> ................................................................</font> <font size ="2"><b>Americana, <%= Time.now.strftime("%d de %B de %Y") %></b></font>
       <%else%>
          <% if current_user.has_role?('bibliotecario') %>
-            Acesso de Bibliotecario(a)
+            Acesso de Bibliotecario(a)<font size="1"> .....................................................................</font> <font size ="2"><b>Americana, <%= Time.now.strftime("%d de %B de %Y") %></b></font>
          <%else%>
             <% if current_user.has_role?('SEDUC') %>
-                  Acesso de Funcinário(a) SEDUC
+                  Acesso de Funcinário(a) SEDUC<font size="1"> .....................................................................</font> <font size ="2"><b>Americana, <%= Time.now.strftime("%d de %B de %Y") %></b></font>
             <%else%>
                <% if current_user.has_role?('estagiario') %>
-                     Acesso de  Estagiário(a)
+                     Acesso de  Estagiário(a)<font size="1"> .....................................................................</font> <font size ="2"><b>Americana, <%= Time.now.strftime("%d de %B de %Y") %></b></font>
                <%else%>>
-                     Acesso de  Usuário(a)
+                     Acesso de Usuário(a)<font size="1"> .....................................................................</font> <font size ="2"><b>Americana, <%= Time.now.strftime("%d de %B de %Y") %></b></font>
               <%end%>
             <%end%>
          <%end%>
@@ -82,7 +82,6 @@
                    <% if current_user.has_role?('admin') or current_user.has_role?('bibliotecario') %>
                     <li><a href="#"><b>Cadastrar</b></a>
                          <ul>
-                          <li><%= link_to "Dicio. & Enciclo.", new_dicionario_enciclopedia_path %></li>
                           <li><%= link_to "Jogos", new_jogo_path %></li>
                           <li><%= link_to "Livros", new_livro_path %></li>
                           <li><%= link_to "Mapas", new_mapa_path %></li>
@@ -98,18 +97,27 @@
                         <ul>
                            <li><%= link_to "Dicio.& Enciclo.", consultaDic_path %></li>
                            <li><%= link_to "Jogos", consultaJog_path %></li>
-                           <li><%= link_to "Livros", consultaLiv_path %></li>
+                           <li><a href="#"><b>Livros</b></a>
+                              <ul>
+                                 <li><%= link_to "Diversas", consultaLiv_path %></li>
+                                 <li><%= link_to "Por Autor", consultaAutLiv_path %></li>
+                                 <li><%= link_to "Por Área", consultaAreLiv_path %></li>
+                                 <li><%= link_to "Por Assunto", consultaAsuLiv_path %></li>
+                                 <li><%= link_to "Por Editora", consultaEdiLiv_path %></li>
+                                 <li><%= link_to "Por Títulos", consultaTit_path %></li>
+                                 <li><%= link_to "Por Típos", consultaTipo_path %></li>
+                              </ul>
+                           </li>
                            <li><%= link_to "Mapas", consultaMap_path %></li>
                            <li><%= link_to "Mídias", consultaMid_path %></li>
-                           <li><%= link_to "Músicas", consultaMus_path %></li>
-                           <li><%= link_to "Títulos", consultaTit_path %></li>
-                           <li><span class="divider divider-horiz" ></span></li>
-                           <li><%= link_to "Autores/Livros", consultaAutLiv_path %></li>
-                           <li><%= link_to "Áreas/Livros", consultaAreLiv_path %></li>
-                           <li><%= link_to "Assuntos/Livros", consultaAsuLiv_path %></li>
-                           <li><%= link_to "Editoras/Livros", consultaEdiLiv_path %></li>
-                           <li><%= link_to "Cantores/Musicas", consultaCanMus_path %></li>
-                          </ul>
+                           
+                           <li><a href="#"><b>Musicas</b></a>
+                              <ul>
+                                 <li><%= link_to "Por Interprete", consultaCanMus_path %></li>
+                                 <li><%= link_to "Por Titulo", consultaMus_path %></li>
+                              </ul>
+                           </li>
+                         </ul>
                       </li>
                  </ul>
               </li>

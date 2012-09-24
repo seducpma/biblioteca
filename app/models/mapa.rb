@@ -7,7 +7,7 @@ class Mapa < ActiveRecord::Base
   belongs_to :localizacao
   after_create :cria_possui_mp, :auto_inc_tombo_seduc, :cria_disponibiliza_mp
   TIPO_MAPA = %w(BIOGRÁFICO CLIMÁTICO DEMOGRÁFICO ECONÔNICO GEOGRÁFICO HIDROGÁFICO HISTÓRICO POLÍTICO RODOVIÁRIO TOPOGRÁFICO OUTROS)
-  FORMATO_MAPA = %w(GLOBO LIVRO PLANO OUTROS)
+  FORMATO_MAPA = %w(PLANO GLOBO OUTROS)
 
 
   def auto_inc_tombo_seduc

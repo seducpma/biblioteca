@@ -1,3 +1,0 @@
-  [4;36;1mSQL (83.0ms)[0m   [0;1mSET client_min_messages TO 'panic'[0m
-  [4;35;1mSQL (285.9ms)[0m   [0mSET client_min_messages TO 'notice'[0m
-  [4;36;1mAluno Load (55.7ms)[0m   [0;1mSELECT * FROM "biblos_pessoas" LIMIT 1[0m

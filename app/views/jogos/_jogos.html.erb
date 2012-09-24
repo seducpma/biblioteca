@@ -8,6 +8,8 @@
   <div class="tabs">
     <table bgcolor="#DCDCDC" width="100%">
          <tr>
+         <tr>
+            <th width="50">Tombo</th>
             <th width="400">Nome</th>
             <th width="100">Faixa Etária</th>
             <th width="100">Fabricante</th>
@@ -16,6 +18,7 @@
 
         <% for jogo in @jogos %>
           <tr  bgcolor="#F5F5F5">
+            <td align="left"><%=h jogo.tombo_l%></td>
             <td><%= jogo.nome%></td>
             <td><%=h jogo.faixa_etaria %></td>
             <td><%=h jogo.fabricante %></td>

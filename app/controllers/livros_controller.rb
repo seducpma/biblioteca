@@ -1,6 +1,7 @@
 class LivrosController < ApplicationController
   before_filter :login_required
   before_filter :load_resources
+  before_filter :load_livros_tipo
 
     def create_editora
       @editora = Editora.new(params[:editora])
@@ -152,6 +153,10 @@ class LivrosController < ApplicationController
     end
   end
 
+def consultaTipo
+  
+end
+
 def consultaLiv
    unless params[:search].present?
      if params[:type_of].to_i == 7
@@ -281,6 +286,14 @@ end
    render :partial => 'subtitulo'
  end
 
+ def lista_tipo
+    $tipo = params[:livro_tipo]
+    @livros = Livro.find(:all, :conditions => ['tipo = ?', $tipo])
+
+    render :partial => 'livros'
+  end
+
+
   protected
 
   def load_resources
@@ -294,5 +307,10 @@ end
     else
       @localizacoes = Localizacao.all(:include => :unidade, :conditions => ['unidade_id = ?', current_user.unidade_id], :order => 'local_guardado ASC')
     end    
+  end
+
+   def load_livros_tipo
+      @livros_tipo = Livro.find(:all, :select => 'distinct tipo')
+      
   end
 end

@@ -1,6 +1,6 @@
 <% form_for @mapas do |f| %>
   <%= f.error_messages %>
-  <table  width="100%" bgcolor="#F5F5F5">
+<table  width="100%" bgcolor="#F5F5F5">
      <tr>
       <td align="lef" colspan="3">
           <b><%= f.label :tombo_l, 'Tombo Local:' %></b><br />
@@ -20,13 +20,13 @@
       </td>
     </tr>
     <tr>
-      <td align="lef">
+      <td align="lef" width ="40%">
          <b><%= f.label :tipo, 'Tipo:' %></b><br />
          <%= f.select :tipo, Mapa::TIPO_MAPA, :include_blank => '--Selecionar--'%>
       </td>
-      <td align="lef">
+      <td align="lef" colspan="2">
          <b><%= f.label :formato,'Formato:' %></b><br />
-        <%= f.select :formato, Mapa::FORMATO_MAPA, :include_blank => '--Selecionar--'%>
+        <%= f.select :formato, Mapa::FORMATO_MAPA%>
       </td>
 
     </tr>
@@ -35,8 +35,9 @@
         <b><%= f.label :editora_id, 'Editora:' %></b><br />
         <%= f.collection_select :editora_id ,@editoras,:id,:nome, :include_blank => "--Selecionar--" %>
       </td>
-      <td align="lef">
-        <%= f.text_field :edicao, :size=>"1" %><b>ª Edição</b>
+      <td align="lef"colspan="2">
+        <br/>
+        <%= f.text_field :edicao, {:value => '1', :size => "1"} %><b>ª<%= f.label :edicao, " Edição" %></b>
          - <b><%= f.label :ano, 'Ano:' %></b>
         <%= f.date_select(:ano, :order => [:year], :start_year => (Date.today.year)-20) %>
       </td>
@@ -57,7 +58,7 @@
       </td>
     </tr>
     <tr>
-      <td><%= f.submit'Salvar' %>
+      <td colspan="3"><%= f.submit'Salvar' %>
       </td>
     </tr>
    </table>
