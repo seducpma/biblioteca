@@ -2,7 +2,6 @@ class AssuntosController < ApplicationController
   before_filter :login_required
   before_filter :load_resources
 
-
   def index
     @assuntos = Assunto.all
   end

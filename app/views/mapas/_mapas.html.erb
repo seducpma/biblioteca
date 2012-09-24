@@ -8,14 +8,16 @@
 <div class="tabs">
     <table bgcolor="#DCDCDC" width="100%">
          <tr>
-                <th width="200">Título</th>
-                <th width="300">Subtítulo</th>
-                <th width="90">Formato</th>
+                <th width="50">Tombo</th>
+                <th width="450">Título</th>
+                <th width="350">Subtítulo</th>
+                <th width="100">Formato</th>
                 <th colspan="3">Administração</th>
          </tr>
          <% if @mapas.present? %>
            <% for mapa in @mapas %>
             <tr bgcolor="	#F5F5F5">
+                <td align="left"><%=h mapa.tombo_l%></td>
                 <td align="left"><%=h mapa.titulo%></td>
                 <td align="left"><%=h mapa.subtitulo %></td>
                 <td align="center"><%=h mapa.formato %></td>

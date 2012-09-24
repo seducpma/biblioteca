@@ -1,7 +1,8 @@
+<div id="interno2">
 <% title "DICIONÁRIOS & ENCICLOPÉDIAS", :id =>"dicionario_enciclopedias" %>
  <div class="tabs">
    <div id="caixa_titulo">
-    <font size="3"><strong>CONSULTA ICIONÁRIOS & ENCICLOPÉDIAS</strong></font><br/>
+    <font size="3"><strong>CONSULTA DICIONÁRIOS & ENCICLOPÉDIAS</strong></font><br/>
    </div>
   <div class="tabs">
     <% form_remote_tag :url => consultaDic_path, :method => :get,:loading => "$('#status').show()" , :success => "$('#status').hide()" do %>
@@ -10,7 +11,7 @@
             <td>
                <a href="#" class="filtro"><%= radio_button_tag(:type_of, "1") %></a>Dicionários
                <a href="#" class="filtro"><%= radio_button_tag(:type_of, "2") %></a>Enciclopédias
-               <a href="#" class="filtro"><%= radio_button_tag(:type_of, "3") %></a>Outros
+               <a href="#" class="filtro"><%= radio_button_tag(:type_of, "3") %></a>Título
                <a href="#" class="filtro"><%= radio_button_tag(:type_of, "4") %></a>Nº Tombo
                <a href="#" class="sem_filtro"><%= radio_button_tag(:type_of, "6") %></a>Todos
             </td>
@@ -33,3 +34,5 @@
 
  </div>
  </div>
+  <br/>
+</div>
