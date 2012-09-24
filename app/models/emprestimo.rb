@@ -1,6 +1,6 @@
 class Emprestimo < ActiveRecord::Base
   has_many :alunoclasse
-  before_create :kind_of, :inabilita
+  before_create :kind_of
   after_update :habilita
   has_one :devolucao
   has_and_belongs_to_many :dpus
@@ -11,14 +11,6 @@ class Emprestimo < ActiveRecord::Base
 
   Tipo = {'Funcionário' => 0, 'Aluno' => 1}
   Kind = {'Livro' => 0, 'Dicionario / enciclopedia' => 1}
-
-  def inabilita
-    dpu_emprestada = Dpu.find(self.dpus)
-    dpu_emprestada.each do |z|
-      z.status = 0
-      z.save
-    end
-  end
 
   def exibe_nome
     if self.funcionario.present?
@@ -99,7 +91,6 @@ class Emprestimo < ActiveRecord::Base
 
   def emprestado_para
     if self.tipo_emprestimo == 1
-
       " #{Aluno.find((self.funcionario.present? ? self.funcionario : self.pessoa ).to_i).nome} (Funcionário)"
     else
       " #{Aluno.find((self.aluno.present? ? self.aluno : self.pessoa).to_i).nome} (Aluno)"
