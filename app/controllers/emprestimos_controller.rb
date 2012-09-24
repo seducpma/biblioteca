@@ -10,27 +10,28 @@ class EmprestimosController < ApplicationController
 
   def busca_tombo
     livro = Dpu.find(:all,:include => [:livro => [:localizacao]], :conditions => ["livros.tombo_l = ? and localizacoes.unidade_id = ?", params[:tombo], current_user.unidade_id])
-    np = ""
-    palavra = params[:tombo]
-    j = palavra.size
-    splited = palavra.split(//)
-    j.downto(0) do |i|
-      np = np + splited[i].to_s
-    end
-
-
-#    l = []
     if livro.count == 1
-#      livro.each do |dpu|
-#       render(:update) { |page| page.insert_html :bottom, 'descricao', :text => "<li id='#{dpu.id}'> - #{dpu.livro.identificacao.livro}</li>" }
-#    end
-    else
-     render :update do |page|
-       page.replace_html 'erro', :text => np
-     end
-
+      livro.each do |dpu|
+        realizado = EmpTemp.find_by_dpu_id(dpu.id)
+        unless realizado.present?
+          emptemp = EmpTemp.new
+            emptemp.dpu_id = dpu.id
+            emptemp.user_id = current_user
+          emptemp.save
+          render(:update) { |page| page.insert_html :bottom, 'descricao', :text => "<li id='#{dpu.id}'> - #{dpu.livro.identificacao.livro}</li>" }
+        else 
+          aviso_duplicado
+        end
     end
-    t = 0
+    else
+      aviso_duplicado
+    end
+  end
+
+  def aviso_duplicado
+     render :update do |page|
+       page.replace_html 'erro', :text => "Tombo duplicado ou inexistente"
+     end
   end
 
   def filtros

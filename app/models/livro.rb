@@ -61,7 +61,6 @@ class Livro < ActiveRecord::Base
     possui.status = 1
     possui.save
   end
-
 end
 
 
