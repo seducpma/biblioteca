@@ -11,7 +11,7 @@
       <tr>
         <td>
            <% if pessoa.aluno_ra.present? %>
-              <%= link_to_remote(pessoa.aluno_ra, :success => "$.fn.colorbox.close()", :url => { :action => "retorno", :pessoa => pessoa.id_pessoa}) %>
+              <%= link_to_remote(pessoa.aluno_ra, :success => "alert('Pessoa selecionada, clique no X para retornar ao empréstimo');", :url => { :action => "retorno", :pessoa => pessoa.id_pessoa}) %>
              <%else%>             
              <% if pessoa.matricula_funcionario.present? %>
               <%= link_to_remote(pessoa.matricula_funcionario, :success => "$.fn.colorbox.close()", :url => { :action => "retorno", :pessoa => pessoa.id_pessoa}) %>

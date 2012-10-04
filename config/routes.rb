@@ -1,8 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :carts
+  map.resources :cart_items
   map.resources :classes
-
-
-
   map.resources :informativos
   map.resources :tombos,:only => [:index], :collection => {:usuario => :get, :livros_diarios => :get,:de_diarios => :get}
   map.resources :logs
@@ -12,9 +11,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :cantores
   map.resources :generos
   map.resources :roles_users, :collection => {:lista_users => :get}
-  map.resources :configuracoes
+  map.resources :configuracoes, :collection => {:ambiente => :get}
   map.resources :importar
-  map.resources :emprestimos, :member => [:devolucao],:collection => {:busca_tombo => :get,:ativos => :get,:realiza_busca => :get,:busca_emprestimo => :get,:funcionario => :get, :alunos => :get,:classe => :get, :dpu => :get, :busca => :get, :devolve_unit => :get}
+  map.resources :emprestimos, :member => [:devolucao,:recibo],:collection => {:busca_tombo => :get,:ativos => :get,:realiza_busca => :get,:busca_emprestimo => :get,:funcionario => :get, :alunos => :get,:classe => :get, :dpu => :get, :busca => :get, :devolve_unit => :get, :retorna_busca => :get, :cria_carrinho => :get}
   map.resources :funcionarios
   map.resources :tipos
   map.resources :unidades
@@ -28,15 +27,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :mapas
   map.resources :dicionario_enciclopedias, :collection => {:de_cadastrados => :get}
   map.resources :livros,:collection => {:livros_cadastrados => :get}
-
+  map.ambientes '/configuracoes/ambiente', :controller => 'configuracoes', :action => 'create_ambiente'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.register '/register', :controller => 'users', :action => 'create'
   map.signup '/signup', :controller => 'users', :action => 'new'
-
   map.resources :users
   map.resource :session
-
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.register '/register', :controller => 'users', :action => 'create'
@@ -45,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
   map.reset_password '/reset_password/:id', :controller => 'passwords', :action => 'edit'
   map.resources :users
   map.resumo '/resumo/:livro', :controller => 'livros', :action => 'resumo'
-
+  map.current_cart 'cart', :controller => 'carts', :action => 'show'
   map.consultaDic '/consultaDic', :controller => 'dicionario_enciclopedias', :action => 'consultaDic'
   map.consultaLiv '/consultaLiv', :controller => 'livros', :action => 'consultaLiv'
   map.consultaJog '/consultaJog', :controller => 'jogos', :action => 'consultaJog'
@@ -66,22 +63,15 @@ ActionController::Routing::Routes.draw do |map|
   map.consultaMid '/consultaMid', :controller => 'midias', :action => 'consultaMid'
   map.consultaAsu '/consultaAsu', :controller => 'assuntos', :action => 'consultaAsu'
   map.consultaAsuLiv '/consultaAsuLiv', :controller => 'assuntos', :action => 'consultaAsuLiv'
-  
-
   map.resource :session
   map.resources :editoras
   map.resources :areas
   map.resources :localizacoes
   map.resources :identificacaos
-
   map.home '', :controller => 'home', :action => 'index'
   map.root :controller => "home"
-
-
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
-
-
   map.geo "/geos/geo/:id", :controller => "geos", :action => "geo"
- 
+  map.show_ambiente "/configuracoes/ambiente/:id", :action => "show_ambiente", :controller => "configuracoes"
 end

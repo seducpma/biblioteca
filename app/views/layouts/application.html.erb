@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
-    <title><%= "SGI - SEDUC / PMA. Você está em: #{h(yield(:title) || 'Sem titulo')}" %></title>
+    <title><%= "Sistema de bibliotecas inter-escolares. Você está em: #{h(yield(:title) || 'Sem titulo')}" %></title>
 
     
     <%= stylesheet_link_tag 'application','menu' %>
@@ -15,7 +15,11 @@
   </head>
 
 <body>
-
+<style media="print">
+.invisible_to_print {
+display: none;
+}
+</style>
  <div id="contents">
   <div id="informacao">
     <% unless informativos_corrente.empty? %>

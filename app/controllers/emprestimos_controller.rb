@@ -9,23 +9,14 @@ class EmprestimosController < ApplicationController
   end
 
   def busca_tombo
-    livro = Dpu.find(:all,:include => [:livro => [:localizacao]], :conditions => ["livros.tombo_l = ? and localizacoes.unidade_id = ? and dpus.status = ?", params[:tombo], current_user.unidade_id,1])
-    if livro.count == 1
-      livro.each do |dpu|
-        realizado = EmpTemp.find_by_dpu_id(dpu.id)
-        unless realizado.present?
-          emptemp = EmpTemp.new
-            emptemp.dpu_id = dpu.id
-            emptemp.user_id = current_user.id
-          emptemp.save
-          render(:update) { |page| page.insert_html :bottom, 'descricao', :text => "<li id='#{dpu.id}'> - #{dpu.livro.identificacao.livro}</li>" }
-        else 
-          aviso_duplicado
-        end
-    end
-    else
-      aviso_duplicado
-    end
+    @dpu = Dpu.find(:all,:include => [:livro => [:localizacao]], :conditions => ["livros.tombo_l = ? and localizacoes.unidade_id = ? and dpus.status = ?", params[:tombo], current_user.unidade_id,1])
+     render :update do |page|
+       page.replace_html 'selecao', :partial => "carrinho"
+     end
+  end
+
+  def retorna_busca
+    @cart = current_cart
   end
 
   def aviso_duplicado
@@ -65,16 +56,16 @@ class EmprestimosController < ApplicationController
 
   def new    
     @emprestimo = Emprestimo.new
-    session[:cart_livros] = Array.new
+    @dpu = Dpu.all(:limit => 5)
+    @cart = current_cart
   end
   def create
     @emprestimo = Emprestimo.new(params[:emprestimo])
     @emprestimo.unidade_id = current_user.unidade_id
     @emprestimo.pessoa = session[:pessoa]
-    @emprestimo.tipo_emprestimo = params[:type]
     if (session[:pessoa]).present?
       if @emprestimo.save
-        salvar(@emprestimo.id,current_user.id)
+        salvar(@emprestimo.id)
 
 #        Log.gera_log("CRIACAO", "EMPRESTIMO", current_user.id , @emprestimo.id)
         flash[:notice] = "EMPRÉSTIMO REALIZADO COM SUCESSO."
@@ -92,9 +83,8 @@ class EmprestimosController < ApplicationController
 
 
 
-  def salvar(emprestimo,user)
-        temp = EmpTemp.find_all_by_user_id(user)
-        temp.each do |z|
+  def salvar(emprestimo)
+        current_cart.cart_items.each do |z|
           nv = DpusEmprestimo.new
             nv.dpu_id = z.dpu_id
             nv.emprestimo_id = emprestimo
@@ -194,7 +184,7 @@ class EmprestimosController < ApplicationController
   def retorno
       @pessoa = Aluno.find(params[:pessoa])
       session[:pessoa] = params[:pessoa]
-      render :update do |page|
+      render :update do |page|        
         page.replace_html 'tipo_emprestimo', :text => @pessoa.nome
       end
   end
@@ -274,6 +264,33 @@ class EmprestimosController < ApplicationController
 
   def ativos
     @emprestimos = Emprestimo.paginate(:all,:conditions => ["status = 1 and unidade_id = ?",current_user.unidade], :per_page => 15, :page => params[:page], :order => "id Desc")
+  end
+
+  def cria_carrinho
+    @cart = current_cart
+    current_cart.cart_items.create!(params[:cart_item])
+    flash[:notice] = "Livro added to cart"
+    session[:last_product_page] = request.env['HTTP_REFERER'] || products_url
+    render :update do |page|
+      #page.insert_html :bottom,'selecionado', :text => params[:cart].inspect
+      page.insert_html :bottom, 'selecionado', :partial => "shared/selecionado"
+      page.replace_html 'retorno_livros', :partial => "conteudo"
+    end    
+  end
+
+  def recibo
+    @emprestimo = Emprestimo.find(params[:id])
+    render :layout => "recibo"
+  end
+
+
+  def remove_livro
+     remove = current_cart.cart_items.find_by_dpu_id(params[:id])
+     remove.destroy
+     @cart = current_cart
+     render :update do |page|
+       page.replace_html 'retorno_livros', :partial => "conteudo"
+     end
   end
 
   protected

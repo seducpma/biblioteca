@@ -1,0 +1,28 @@
+	<div style='display:none'>
+		<div id='inline_livro' style='padding:10px; background:#EEE9E9;'>
+                <table>
+                  <% form_remote_for :livro, :method => :get,:loading => "$('#status').show()" , :success => "$('#status').hide();",
+                                      :url => {:controller => :emprestimos,
+                                      :action => "busca_tombo" } do |form| %>
+                    <tr>
+                      <td colspan="2">
+                        <%= label_tag :tombo, "Digite o Tombo" %>
+                        <%= text_field_tag :tombo %>
+                      </td>
+                      <td><%= image_submit_tag("/stylesheets/images/exibir.gif", :title => "Buscar Tombo")%></td>
+                    </tr>
+                  <%end%>
+                </table>
+                <br/>
+                <div id="selecao"></div><br/>
+                <div id="teste">
+                  <ul id="selecionado">
+                    <% if @cart.present? %>
+                      <% @cart.cart_items.each do |item| %>
+                        <li id="<%= item.dpu_id %>"><%= item.dpu_id %><%= link_to_remote " - Remover",:url => {:id => item.dpu_id,:action => "remove_livro"},:before => "remove_livro('#{item.dpu_id}')"%></li>
+                      <%end%>
+                    <%end%>
+                  </ul>
+                </div>
+        </div>
+</div>

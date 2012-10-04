@@ -1,0 +1,38 @@
+<% title "Livros" %>
+
+<% for dpu in @dpu %>
+  <div class="product">
+    <h3>
+      <% if dpu.livro_id.present? %>
+        <td><%= link_to h(dpu.livro.identificacao.livro), dpu.livro %></td>
+      <%else%>
+        <%if dpu.dicionario_enciclopedia_id.present?%>
+          <td><%= link_to h(dpu.dicionario_enciclopedia.identificacao.livro), dpu.livro %></td>
+        <%else%>
+          <%if dpu.jogo_id.present?%>
+            <td><%= link_to h(dpu.jogo.nome), dpu.jogo %></td>
+          <%else%>
+            <%if dpu.mapa_id.present?%>
+              <td><%= link_to h(dpu.mapa.identificacao.livro), dpu.livro %></td>
+            <%else%>
+              <%if dpu.midia_id.present?%>
+                <td><%= link_to h(dpu.midia.identificacao.livro), dpu.livro %></td>
+              <%else%>
+                <%if dpu.periodico_id.present?%>
+                  <td><%= link_to h(dpu.periodico.identificacao.livro), dpu.livro %></td>
+                <%end%>
+              <%end%>
+            <%end%>
+          <%end%>
+        <%end%>
+      <%end%>
+    </h3>
+    <% form_remote_for :cart_item, :method => :get,:loading => "$('#status').show()" , :success => "$('#status').hide()",
+       :url => {:controller => :emprestimos,
+       :action => "cria_carrinho" } do |f| %>
+
+      <%= f.hidden_field(:dpu_id,:value => dpu.id) %>
+      <%= f.submit "Adicionar" %>
+    <% end %>
+  </div>
+<% end %>

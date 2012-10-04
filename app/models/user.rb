@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   belongs_to :unidade
   has_many :tombos
   has_many :logs
+  has_many :ambientes
   
   # has_role? simply needs to return true or false whether a user has a role or not.  
   # It may be a good idea to have "admin" roles return true always

@@ -9,7 +9,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120920160143) do
+ActiveRecord::Schema.define(:version => 20121004162730) do
+
+  create_table "ambientes", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "turma"
+    t.integer  "ano_letivo"
+    t.date     "data"
+    t.integer  "unidade"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "areas", :force => true do |t|
     t.string   "nome"
@@ -64,6 +74,21 @@ ActiveRecord::Schema.define(:version => 20120920160143) do
   create_table "cantores_midias", :id => false, :force => true do |t|
     t.integer "midia_id",  :null => false
     t.integer "cantor_id", :null => false
+  end
+
+  create_table "cart_items", :force => true do |t|
+    t.integer  "dpu_id"
+    t.integer  "cart_id"
+    t.integer  "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "carts", :force => true do |t|
+    t.string   "token"
+    t.integer  "user_id",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "configuracoes", :force => true do |t|

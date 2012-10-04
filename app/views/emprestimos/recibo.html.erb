@@ -1,0 +1,59 @@
+  <% title "RECIBO DE EMPRÉSTIMO" %>
+   <div id="recibo">
+     
+     <table>
+       <tr>
+         <th colspan="2">EMPRESTIMO Nº <%= @emprestimo.id %></th>
+       </tr>
+      <tr>
+        <td><b>Nome:</b></td>
+        <td><%= @emprestimo.emprestado_para %></td>
+      </tr>
+      <tr>
+        <td><b>RA:</b></td>
+        <td><%= @emprestimo.exibe_ra_mat %></td>
+      </tr>
+      <tr>
+        <td><b>Data Devolução:</b></td>
+        <% if @emprestimo.data_devolucao.nil? %>
+          <td></td>
+        <%else%>
+          <td><%= @emprestimo.data_devolucao.strftime("%d/%m/%Y") %></td>
+        <%end%>
+      </tr>
+      <tr>
+        <td valign="top"><b>Itens Emprestados:</b></td>
+        <td valign="top">
+         <%@emprestimo.dpus.each do |dpu|%>
+            <% if dpu.livro_id.present? %>
+               <b>-</b> <%= dpu.livro.identificacao.livro %> (Livro)<br/>
+             <%else%>
+               <% if dpu.dicionario_enciclopedia_id.present? %>
+                  <b>-</b><%= dpu.dicionario_enciclopedia.identificacao.livro %> (Dicionário)<br/>
+                <%end%>
+              <%end%>
+         <%end%>
+      </td>
+      </tr>
+      <tr>
+        <td><b>Estado</b></td>
+        <td><%= @emprestimo.seu_status? %></td>
+      </tr>
+      <tr>
+        <td><b>Data encerramento:</b></td>
+        <td><%= @emprestimo.sua_data_entrega? %></td>
+      </tr>
+      <tr>
+        <td>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          Assinatura: __________________________
+        </td>
+      </tr>
+      <tr class="invisible_to_print">
+        <td><input type="Button" Value="Imprimir" onclick="Imprimir()"/></td>
+      </tr>
+     </table>
+   </div>

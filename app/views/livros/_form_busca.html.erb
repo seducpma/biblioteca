@@ -2,7 +2,7 @@
 	<div style='display:none'>
 		<div id='inline_busca' style='padding:10px; background:#EEE9E9;' >
           <h2>TÍTULOS</h2>
-          <hr>
+          <hr/>
           <% form_remote_for(:busca,:url => { :action => 'filtrar' },:loading => "$('#status').show()", :success => "$('#status').hide()" ) do |f|%>
             <%= error_messages_for 'contact' %>
             <table>

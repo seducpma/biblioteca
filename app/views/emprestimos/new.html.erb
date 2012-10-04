@@ -1,24 +1,17 @@
 <% title "EMPRÉSTIMOS".singularize %>
-<div class="tabs">
- <div id="caixa_titulo">
-     <font size="3"><strong>EMPRÉSTIMO BIBLIOTECA</strong></font><br/>
- </div>
-      
-      <%= render :partial => 'form' %>
-    
-  <table width="95%">
-   <tr>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <td align="center"> <%= link_to image_tag("/stylesheets/images/voltar.png", :size => "35x35"), root_path, :title => "Voltar" %></td>
-    <td align="center"><%= link_to image_tag("/stylesheets/images/listar.png", :size => "25x25"), :title => "Emprestados" %></td>
-   </tr>
-  </table>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
+<div class="caixa">
+  <div class="tabs">
+   <div id="caixa_titulo">
+       <font size="4"><strong>EMPRÉSTIMO BIBLIOTECA</strong></font><br/>
+   </div>
 
+        <%= render :partial => 'form' %>
+
+    <table width="50%">
+     <tr>
+      <td align="center"> <%= link_to image_tag("/stylesheets/images/voltar.png", :size => "35x35"), root_path, :title => "Voltar" %></td>
+     </tr>
+    </table>
+
+  </div>
 </div>

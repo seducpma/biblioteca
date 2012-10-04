@@ -12,7 +12,7 @@
   inflect.irregular 'identificaocao', 'identificacoes'
   inflect.irregular 'localizacao','localizacoes'
   inflect.irregular 'cantor','cantores'
-  inflect.irregular 'item','itens'
+  #inflect.irregular 'item','itens'
   inflect.irregular 'autor','autores'
   inflect.irregular 'configuracao', 'configuracoes'
   inflect.irregular 'devolucao', 'devolucoes'

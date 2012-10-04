@@ -28,6 +28,24 @@
     background-color:#F5F5F5;
 
 }
+#selecao{
+    height:180px;
+    width:300px;
+    border: solid 1px;
+    overflow: auto;
+    background-color:#F5F5F5;
+
+}
+#selecionado{
+    height:180px;
+    width:300px;
+    border: solid 1px;
+    overflow: auto;
+    background-color:#F5F5F5;
+
+}
+
+
 #livros{
     height:380px;
     width:auto;
@@ -964,3 +982,23 @@ margin:2px 2px 0px 2px;
 border-color:#AAAAAA;
 }
 
+.list_no_mark{
+    list-style:none;
+    width:350px;
+    border: solid 1px;
+    overflow: auto;
+    background-color:#F5F5F5
+
+}
+
+.caixa{
+   position:absolute;
+   border-color:black;
+   border-left: double;
+   border-bottom: double;
+   border-top: double;
+   border-right: double; 
+   width: 800px;
+   left:210px;
+   top: 350px;
+}

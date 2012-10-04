@@ -1,43 +1,29 @@
-<h2><%= current_user.unidade.nome %></h2>
-<% form_remote_for :livro, :method => :get,:loading => "$('#status').show()" , :success => "$('#status').hide()",
-                    :url => {:controller => :emprestimos,
-                    :action => "busca_tombo" } do |form| %>
-  <tr>
-    <td colspan="2">
-      <%= label_tag :tombo, "Digite o Tombo" %>
-    </td>
-    <td>
-      <%= text_field_tag :tombo %>
-    </td>
-  </tr>
-  <tr><td><%= image_submit_tag("/stylesheets/images/icon_add.png", :title => "Adicionar Livros") %></td></tr>
-<%end%>
-<% form_for @emprestimo, :html => {:name => "f1"} do |f| %>
-  <%= f.error_messages %>
-  <table>
-    <tr>
-      <td id="tipo_emprestimo"></td>
-      <% if params[:type] == 1 %>
-        <td id="aluno" class="aluno">
-          <%= link_to image_tag("/stylesheets/images/buscar.png", :size => "28x22"), "#inline_content", :class =>"inline" %>
-        </td>
-      <%else%>
-        <td id="funcionario" class="professor">
-          <%= link_to image_tag("/stylesheets/images/buscar.png", :size => "28x22"), "#inline_professor", :class =>"inline" %>
-        </td>
-      <%end%>
-      <%= hidden_field_tag(:type, params[:type]) %>
-    </tr>
-    <tr>
-      <td><b id="descricao">Livros</b></td>
-    </tr>
-    <tr>
-      <td>
-        <%= f.submit "Salvar" %>
-      </td>
-    </tr>
-  </table>
-<% end %>
-<div id="erro">Atenção</div>
-<%= render "form_inline_content" %>
-<%= render "form_inline_professor" %>
+    <h2><%= current_user.unidade.nome %></h2>
+    <% form_for @emprestimo do |f| %>
+      <%= f.error_messages %>      
+          <%unless session[:pessoa].present? %>
+            <p><div id="tipo_emprestimo"><%= "Selecione um cliente -  #{link_to image_tag("/stylesheets/images/buscar.png", :size => "28x22"), "#inline_content", :class =>"inline"}" %></div></p>
+          <%else%>
+            <p><%= "#{Aluno.find(session[:pessoa]).nome} - #{link_to image_tag("/stylesheets/images/buscar.png", :size => "28x22"), "#inline_content", :class =>"inline"}" %></p>
+          <%end%>
+          <p>
+            <div id="surge" style="display:none">
+              <%= "Lista de livros a serem emprestados #{link_to image_tag('/stylesheets/images/icon_add.png', :title => 'Adicionar Livros'), '#inline_livro', :class => 'outline'}"%>
+            </div>
+          </p>
+        
+          <p><b>Livro(s) selecionado(s)</b></p>        
+          <p>
+            <div class="list_no_mark "id="retorno_livros">
+              <% if @cart.present?%>
+                <%= render "conteudo" %>
+              <%end%>
+            </div>
+          </p>
+          <p>
+            <%= f.submit "Salvar" %>
+          </p>
+    <% end %>
+    <%= render "form_inline_content" %>
+    <%= render "form_inline_professor" %>
+    <%= render "form_inline_carrinho" %>

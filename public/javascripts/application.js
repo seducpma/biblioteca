@@ -1,4 +1,17 @@
+function Imprimir(){
+window.print();
+}
+function MM_openBrWindow(theURL,winName,features) {
+window.open(theURL,winName,features);
+}
+
+function remove_livro(link) {
+    var d = document.getElementById('selecionado');
+    var olddiv = document.getElementById(link);
+    d.removeChild(olddiv);
+}
 jQuery(document).ready(function( $ ){
+
 
 //Ajusta filtros
 //

@@ -1,4 +1,5 @@
 class ConfiguracoesController < ApplicationController
+  before_filter  :load_resources
   def index
     @configuracaos = Configuracao.all(:conditions => ["unidade_id = ?", current_user.unidade_id])
   end
@@ -43,4 +44,37 @@ class ConfiguracoesController < ApplicationController
     flash[:notice] = "EXCLUIDO COM SUCESSO."
     redirect_to configuracaos_url
   end
+
+  def ambiente
+    @ambiente = Ambiente.new
+  end
+
+
+  def create_ambiente
+    @ambiente = Ambiente.new(params[:ambiente])
+    @ambiente.unidade = current_user.unidade_id
+    if @ambiente.save
+      flash[:notice] = "CADASTRADO COM SUCESSO."
+      #Log.gera_log("CRIACAO", "CONFIGURACAO", current_user.id,@configuracao.id)
+      #redirect_to @configuracao
+    else
+      render :action => 'ambiente'
+    end
+  end
+
+  def show_ambiente
+    @ambiente = Ambiente.find(params[:id])
+  end
+
+protected
+  def load_resources
+    if current_user.unidade_id == 53
+      @classes = Aluno.all(:select => "id_classe, classe_descricao, classe_ano, id_escola",:conditions => ["classe_ano = ?", Date.today.strftime("%Y").to_i], :group => ["id_classe,classe_descricao, classe_ano,id_escola"] , :order => "classe_descricao")
+    else
+      @classes = Aluno.all(:select => "id_classe, classe_descricao, classe_ano, id_escola",:conditions => ["classe_ano = ? and id_escola = ?", Date.today.strftime("%Y").to_i, current_user.unidade.unidades_gpd_id], :group => ["id_classe,classe_descricao, classe_ano,id_escola"] , :order => "classe_descricao")
+    end
+     #@disponiveis = Dpu.all(:include => [:livro =>[:identificacao]],:conditions => ["(dpus.livro_id is not null) and dpus.status = 1 and dpus.unidade_id = ?", current_user.unidade_id],:order => "identificacaos.livro ASC")
+  end
+
+
 end

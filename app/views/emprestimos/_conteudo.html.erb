@@ -1,0 +1,26 @@
+<br/>
+  <% for cart_item in @cart.cart_items %>
+      <% if cart_item.dpu.livro_id.present? %>
+        <li><%=h "#{cart_item.dpu.livro.tombo_l} - #{cart_item.dpu.livro.identificacao.livro}" %></li>
+      <%else%>
+        <%if cart_item.dpu.dicionario_enciclopedia_id.present?%>
+          <li><%=h "#{cart_item.dpu.dicionario_enciclopedia.tombo_l} - #{cart_item.dpu.dicionario_enciclopedia.identificacao.livro}" %></li>
+        <%else%>
+          <%if cart_item.dpu.jogo_id.present?%>
+            <li><%=h "#{cart_item.dpu.jogo.tombo_l} - #{cart_item.dpu.jogo.nome}" %></li>
+          <%else%>
+            <%if cart_item.dpu.mapa_id.present?%>
+              <li><%=h "#{cart_item.dpu.mapa.tombo_l} - #{cart_item.dpu.mapa.identificacao.livro}" %></li>
+            <%else%>
+              <%if cart_item.dpu.midia_id.present?%>
+                <li><%=h "#{cart_item.dpu.midia.tombo_l} - #{cart_item.dpu.midia.identificacao.livro}" %></li>
+              <%else%>
+                <%if cart_item.dpu.periodico_id.present?%>
+                  <li><%=h "#{cart_item.dpu.periodico.tombo_l} - #{cart_item.dpu.periodico.identificacao.livro}" %></li>
+                <%end%>
+              <%end%>
+            <%end%>
+          <%end%>
+        <%end%>
+      <%end%>
+  <% end %>

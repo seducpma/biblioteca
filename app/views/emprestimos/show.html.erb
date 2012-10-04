@@ -44,7 +44,7 @@
         <td><%= @emprestimo.sua_data_entrega? %></td>
       </tr>
     </table>
-        <table>
+    <table>
           <tr>
             <td width="6%"align="left" ><%= link_to image_tag("/stylesheets/images/voltar.png", :size => "35x35"), root_path, :title => "Voltar" %></td>
             <td width="6%"align="left" ><%= link_to image_tag("/stylesheets/images/listar.png", :size => "25x25"), emprestimos_path, :title => "Empréstimos Cadastradas" %></td>
@@ -53,9 +53,9 @@
                <%if @emprestimo.status != false%>
                 <td width="6%"align="left" ><%= link_to image_tag("/stylesheets/images/transferencia.gif", :size => "25x25"), devolucao_emprestimo_path(@emprestimo), :title => "Devolver Empréstimo" %></td>
                <%end%>
-               <td align="left" ><%= link_to image_tag("/stylesheets/images/excluir.png", :size => "25x25"), @emprestimo, :confirm => 'Confirma Exclusão?', :method => :delete, :title => "Excluir Emprestimo" %></td>
+               <td align="left" width="6%"><%= link_to image_tag("/stylesheets/images/excluir.png", :size => "25x25"), @emprestimo, :confirm => 'Confirma Exclusão?', :method => :delete, :title => "Excluir Emprestimo" %></td>
             <%end%>
+             <td align="left"><%= link_to_function(image_tag("/stylesheets/images/imprimir.png", :size => "25x25"),"MM_openBrWindow('#{recibo_emprestimo_path(@emprestimo)}','figura','width=640,height=450')") %></td>
           </tr>
-        </table>
+      </table>
 </div>
-
