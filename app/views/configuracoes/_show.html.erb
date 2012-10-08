@@ -1,0 +1,10 @@
+<p>
+  <b>Criado por:</b>
+  <%=h @ambiente.user.login %><br/>
+  <b>Turma selecionada:</b>
+  <%=h @ambiente.busca_turma(@ambiente.turma_id) %><br/>
+  <b>Data de criação:</b>
+  <%=h @ambiente.data %><br/>
+  <b>Corresponde ao ano:</b>
+  <%=h @ambiente.ano_letivo %>
+</p>

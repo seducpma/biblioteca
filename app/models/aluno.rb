@@ -1,7 +1,8 @@
 class Aluno < AutenticacaoDatabase
-  
+
   set_table_name 'biblos_pessoas'
   set_primary_key 'id_pessoa'
+  has_many :ambientes
   D = {"#{Date.today.strftime("%Y")}" => "#{Date.today.strftime("%Y")}"}
 
   def concat_locale

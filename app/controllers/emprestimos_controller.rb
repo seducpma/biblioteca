@@ -58,6 +58,16 @@ class EmprestimosController < ApplicationController
     @emprestimo = Emprestimo.new
     @dpu = Dpu.all(:limit => 5)
     @cart = current_cart
+    define_ambiente
+  end
+
+  def define_ambiente
+    ambiente = Ambiente.find_by_user_id(current_user.id)
+    if ambiente.present?
+      session[:classe] = ambiente.turma_id
+      session[:desc_classe] = Aluno.find_by_id_classe(ambiente.turma_id).classe_descricao
+      session[:ano_letivo] = ambiente.ano_letivo
+    end
   end
   def create
     @emprestimo = Emprestimo.new(params[:emprestimo])
@@ -169,9 +179,7 @@ class EmprestimosController < ApplicationController
 
   end
   def classe
-    session[:classe] = params[:classe][:id_classe]
-    session[:ano_letivo] = params[:classe][:ano_letivo]
-    @alunos = Aluno.all(:conditions => ["id_classe = ? and classe_ano = ?",params[:classe][:id_classe],params[:classe][:ano_letivo]])
+    @alunos = Aluno.all(:conditions => ["id_classe = ? and classe_ano = ?",session[:classe],session[:ano_letivo]])
     if params[:classe].present?
           render :update do |page|
             page.replace_html 'classe', :partial => "listagem"

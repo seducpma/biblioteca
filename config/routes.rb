@@ -73,5 +73,5 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
   map.geo "/geos/geo/:id", :controller => "geos", :action => "geo"
-  map.show_ambiente "/configuracoes/ambiente/:id", :action => "show_ambiente", :controller => "configuracoes"
+  map.show_ambiente "/configuracoes/show_ambiente/:id", :action => "show_ambiente", :controller => "configuracoes"
 end

@@ -13,7 +13,7 @@ ActiveRecord::Schema.define(:version => 20121004162730) do
 
   create_table "ambientes", :force => true do |t|
     t.integer  "user_id"
-    t.string   "turma"
+    t.integer  "turma_id"
     t.integer  "ano_letivo"
     t.date     "data"
     t.integer  "unidade"

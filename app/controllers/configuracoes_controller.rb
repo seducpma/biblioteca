@@ -51,20 +51,27 @@ class ConfiguracoesController < ApplicationController
 
 
   def create_ambiente
-    @ambiente = Ambiente.new(params[:ambiente])
+    @ambiente = Ambiente.find_or_create_by_user_id(current_user.id)
     @ambiente.unidade = current_user.unidade_id
-    if @ambiente.save
-      flash[:notice] = "CADASTRADO COM SUCESSO."
-      #Log.gera_log("CRIACAO", "CONFIGURACAO", current_user.id,@configuracao.id)
-      #redirect_to @configuracao
-    else
-      render :action => 'ambiente'
-    end
+    @ambiente.update_attributes(params[:ambiente])
+    render :js => "$.fn.colorbox.close()"      
+  #    redirect_to show_ambiente_path(@ambiente)
+  #  else
+  #    render :action => 'ambiente'
+    
   end
 
   def show_ambiente
     @ambiente = Ambiente.find(params[:id])
   end
+
+  def exibe_ambiente
+    @ambiente = Ambiente.find_all_by_user_id(current_user.id).last
+    render :update do |page|
+      page.replace_html 'ambiente', :partial => "show"
+    end
+  end
+
 
 protected
   def load_resources

@@ -6,12 +6,17 @@
     <%= f.hidden_field(:user_id, :value => current_user.id) %>
   </p>
   <p>
-    <%= f.label :turma %><br />
-    <%= f.collection_select(:turma, @classes, :id_classe, :classe_descricao, :include_blank => ' -- Selecionar -- '  ) %>
+    <%= f.label :turma_id,"Classe" %><br />
+    <%= f.collection_select(:turma_id, @classes, :id_classe, :classe_descricao, :include_blank => ' -- Selecionar -- '  ) %>
   </p>
   <p>
     <%= f.label :data %><br />
     <%= f.text_field :data, :size => 5 %>
   </p>
+  <p>
+    <%= f.label :ano_letivo %><br />
+    <%= f.text_field :ano_letivo, :size => 5 %>
+  </p>
+
   <p><%= f.submit %></p>
 <% end %>

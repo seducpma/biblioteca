@@ -1,6 +1,7 @@
 		$(document).ready(function(){
 			//Examples of how to assign the ColorBox event to elements
                         $(".outline").colorbox({inline:true,width:"30%", overlayClose: false});
+                        $(".line").colorbox({inline:true, overlayClose: false});
                         $(".inline#pessoa").colorbox({inline:true ,height:"80%"});$(".inline").colorbox({inline:true ,width:"80%", overlayClose: false});
                         $(".inline").colorbox({inline:true ,width:"80%", overlayClose: false, onClosed:function(){$('#surge').show()}});
 			$(".callbacks").colorbox({

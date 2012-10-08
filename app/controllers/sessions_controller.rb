@@ -18,8 +18,15 @@ class SessionsController < ApplicationController
       self.current_user = user
       new_cookie_flag = (params[:remember_me] == "1")
       handle_remember_cookie! new_cookie_flag
-      redirect_back_or_default(home_path)
+      ambiente = Ambiente.find_all_by_user_id(user).last
+      @ambiente = Ambiente.find_all_by_user_id(user).last
+      if ambiente.present?
+        redirect_back_or_default(home_path(:user => user))
+      else
+        redirect_to(ambiente_configuracoes_path)
+      end
       flash[:notice] = "BEM VINDO AO BIBLOS"
+
     else
       note_failed_signin
       @login       = params[:login]
