@@ -52,19 +52,14 @@ class ConfiguracoesController < ApplicationController
 
   def create_ambiente
     @ambiente = Ambiente.find_or_create_by_user_id(current_user.id)
-    @ambiente.unidade = current_user.unidade_id
+    @ambiente.unidade_id = current_user.unidade_id
     @ambiente.update_attributes(params[:ambiente])
-    atualiza    
-  #    redirect_to show_ambiente_path(@ambiente)
-  #  else
-  #    render :action => 'ambiente'   
-  end
-
-  def atualiza
     render :update do |page|
       page.replace_html 'teste', :partial => "show"
     end
+
   end
+
   
   def show_ambiente
     @ambiente = Ambiente.find(params[:id])
