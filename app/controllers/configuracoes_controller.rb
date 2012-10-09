@@ -54,13 +54,18 @@ class ConfiguracoesController < ApplicationController
     @ambiente = Ambiente.find_or_create_by_user_id(current_user.id)
     @ambiente.unidade = current_user.unidade_id
     @ambiente.update_attributes(params[:ambiente])
-    render :js => "$.fn.colorbox.close()"      
+    atualiza    
   #    redirect_to show_ambiente_path(@ambiente)
   #  else
-  #    render :action => 'ambiente'
-    
+  #    render :action => 'ambiente'   
   end
 
+  def atualiza
+    render :update do |page|
+      page.replace_html 'teste', :partial => "show"
+    end
+  end
+  
   def show_ambiente
     @ambiente = Ambiente.find(params[:id])
   end

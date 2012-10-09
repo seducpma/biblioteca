@@ -23,14 +23,22 @@ class DicionarioEnciclopediasController < ApplicationController
        render :update do |page|
          page.replace_html 'dicionarios', :partial => "dicionarios"
        end
+     else
+       if params[:type_of].to_i == 1
+         @contador = Livro.all(:include => [:localizacao],:conditions =>["localizacoes.unidade_id = ? and tipo=?",current_user.unidade_id, 'DICIONÁRIO']).count
+         @dicionario_enciclopedias = Livro.paginate :all, :page => params[:page], :per_page => 20, :joins => [:identificacao,:localizacao],:conditions =>["localizacoes.unidade_id = ? and tipo=?",current_user.unidade_id, 'DICIONÁRIO' ],:order => 'livro ASC'
+         render :update do |page|
+            page.replace_html 'dicionarios', :partial => "dicionarios"
+         end
+       end
      end
    else
       if params[:type_of].to_i == 1
-          @contador = Livro.all(:include => [:localizacao],:conditions =>["localizacoes.unidade_id = ? and tipo=?",current_user.unidade_id, 'DICIONÁRIO']).count
-          @dicionario_enciclopedias = Livro.paginate :all, :page => params[:page], :per_page => 20, :joins => [:identificacao,:localizacao],:conditions =>["localizacoes.unidade_id = ? and tipo=?",current_user.unidade_id, 'DICIONÁRIO' ],:order => 'livro ASC'
+         @contador = Livro.all(:include => [:localizacao],:conditions =>["localizacoes.unidade_id = ? and tipo=?",current_user.unidade_id, 'DICIONÁRIO']).count
+         @dicionario_enciclopedias = Livro.paginate :all, :page => params[:page], :per_page => 20, :joins => [:identificacao,:localizacao],:conditions =>["localizacoes.unidade_id = ? and tipo=?",current_user.unidade_id, 'DICIONÁRIO' ],:order => 'livro ASC'
          render :update do |page|
             page.replace_html 'dicionarios', :partial => "dicionarios"
-          end
+         end
           else if params[:type_of].to_i == 2
             @contador = Livro.all(:include => [:localizacao],:conditions =>["localizacoes.unidade_id = ? and tipo=?",current_user.unidade_id, 'ENCICLOPÉDIA']).count
             @dicionario_enciclopedias = Livro.paginate :all, :page => params[:page], :per_page => 20, :joins => [:identificacao,:localizacao],:conditions =>["localizacoes.unidade_id = ? and tipo=?",current_user.unidade_id, 'ENCICLOPÉDIA' ],:order => 'livro ASC'
@@ -210,6 +218,12 @@ def filtrar
     @editoras = Editora.all(:order => 'nome ASC')
     @localizacoes = Localizacao.all(:order => 'local_guardado ASC')
     @identificacoes  = Identificacao.all(:order => 'livro ASC')
+    if current_user.unidade_id == 53
+      @classes = Aluno.all(:select => "id_classe, classe_descricao, classe_ano, id_escola",:conditions => ["classe_ano = ?", Date.today.strftime("%Y").to_i], :group => ["id_classe,classe_descricao, classe_ano,id_escola"] , :order => "classe_descricao")
+    else
+      @classes = Aluno.all(:select => "id_classe, classe_descricao, classe_ano, id_escola",:conditions => ["classe_ano = ? and id_escola = ?", Date.today.strftime("%Y").to_i, current_user.unidade.unidades_gpd_id], :group => ["id_classe,classe_descricao, classe_ano,id_escola"] , :order => "classe_descricao")
+    end
+
   end
 
 end

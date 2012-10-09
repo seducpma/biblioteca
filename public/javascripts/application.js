@@ -324,7 +324,7 @@ $("#localizacao_data_aquisicao").datepicker({dateFormat: 'dd-mm-yy', changeYear:
 
    $(".sem_filtro").click(function ()
     {
-      $(".txt_busca").val("");
+      $(".txt_busca").val("s");
       $(".txt_busca").hide();
       $(".label_busca").hide();
       $(".consulta").show();

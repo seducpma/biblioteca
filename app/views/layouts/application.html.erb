@@ -194,6 +194,8 @@ display: none;
    <div id="rodape">
      © 2011 . Prefeitura de Americana - SEDUC - Todos os Direitos Reservados.
    </div>
-    <%= render "shared/forms/form_inline_ambiente" %>
+   <%if @classes.present?%>
+      <%= render "shared/forms/form_inline_ambiente" %>
+   <%end%>
  </body>
 </html>
