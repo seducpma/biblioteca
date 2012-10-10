@@ -2,8 +2,10 @@
    <br/>
    <%= link_to 'Ambiente configurado', "#inline_ambiente", :class =>"line"%>
    <hr/>
-   <div id="teste">
+   <div id="atual">
+     <% if @a.present? %>
       <%= render "configuracoes/show" %>
+     <%end%>
    </div>
    <hr/>
     <h1>EMPRÉSTIMOS EM VIGÊNCIA</h1>

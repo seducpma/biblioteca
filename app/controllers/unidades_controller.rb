@@ -1,4 +1,5 @@
 class UnidadesController < ApplicationController
+  
   def index
     @unidades = Unidade.all
   end

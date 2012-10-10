@@ -3,7 +3,11 @@ class HomeController < ApplicationController
   
   def index
     @emprestimos = Emprestimo.paginate(:all,:conditions => ["status = 1 and unidade_id = ?",current_user.unidade], :per_page => 15, :page => params[:page], :order => "id Desc")
-    @ambiente = Ambiente.find_all_by_user_id(current_user.id).last
+    a = Ambiente.find_by_user_id(current_user.id)
+    if a.present?
+       u = a.user_id
+       @a = a
+    end
   end
 
   def load_resources

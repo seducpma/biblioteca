@@ -18,10 +18,10 @@ class SessionsController < ApplicationController
       self.current_user = user
       new_cookie_flag = (params[:remember_me] == "1")
       handle_remember_cookie! new_cookie_flag
-      ambiente = Ambiente.find_all_by_user_id(user).last
-      @ambiente = Ambiente.find_all_by_user_id(user).last
+      ambiente = Ambiente.find_all_by_user_id(user)
+      #@ambiente = ambiente.last
       if ambiente.present?
-        redirect_back_or_default(home_path(:user => user))
+        redirect_back_or_default(home_path(:user => user, :type => 0))
       else
         redirect_to(ambiente_configuracoes_path)
       end
