@@ -48,7 +48,7 @@ ActionController::Routing::Routes.draw do |map|
   map.consultaJog '/consultaJog', :controller => 'jogos', :action => 'consultaJog'
   map.consultaMap '/consultaMap', :controller => 'mapas', :action => 'consultaMap'
   map.consultaAut '/consultaAut', :controller => 'autores', :action => 'consultaAut'
-  map.consultaAutLiv '/consultaAutLiv', :controller => 'autores', :action => 'consultaAutLiv'
+  map.consultaAutLiv '/consultaAutLiv', :controller => 'autores', :action => 'consulta_aut_liv'
   map.consultaTipo '/consultaTipo', :controller => 'livros', :action => 'consultaTipo'
   map.consultaAre '/consultaAre', :controller => 'areas', :action => 'consultaAre'
   map.consultaAreLiv '/consultaAreLiv', :controller => 'areas', :action => 'consultaAreLiv'

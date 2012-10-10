@@ -46,8 +46,11 @@ class AutoresController < ApplicationController
     redirect_to autores_url
   end
 
+  def consulta_aut_liv    
+  end
 
-def consultaAut
+
+  def consultaAut
   unless params[:search].present?
     if params[:type_of].to_i == 3
       @contador = Autor.all.count

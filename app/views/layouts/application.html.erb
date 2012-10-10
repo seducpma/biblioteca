@@ -38,12 +38,9 @@ display: none;
    <h3 align="center"><b><%= link_to_remote("Ocultar esta mensagem", :url => {:controller => 'javascripts', :action => 'hide_announcement'}) %></b></h3>
   </div>
    <%end%>
-</div>
-
-<div id="header">
- <br/>
-  <div id="topo"></div>
-
+  <div id="header">
+    <br/>
+    <div id="topo"></div>
     <%if logged_in? then%>
       <font size="4" color="green"><%= link_to h(current_user.login.capitalize), edit_user_path(current_user) %>  </font>
       <% if current_user.has_role?('admin') %>
@@ -98,9 +95,10 @@ display: none;
                         </ul>
                      </li>
                   <%end%>
-                     <li><a>Consultar</a>
-                       <li></li>
-                        <ul>
+                     <li><a>Consulta</a>
+                       <ul>
+                        <li><a>Local</a>
+                          <ul>
                            <li><%= link_to "Dicio.& Enciclo.", consultaDic_path %></li>
                            <li><%= link_to "Jogos", consultaJog_path %></li>
                            <li><a href="#"><b>Livros</b></a>
@@ -124,6 +122,13 @@ display: none;
                               </ul>
                            </li>
                          </ul>
+                        </li>
+                         <li><a>Na rede</a>
+                           <ul>
+                             <li><%= link_to "Dicionários" %></li>
+                           </ul>
+                         </li>
+                       </ul>
                       </li>
                  </ul>
               </li>
@@ -195,6 +200,7 @@ display: none;
    <div id="rodape">
      © 2011 . Prefeitura de Americana - SEDUC - Todos os Direitos Reservados.
    </div>
+ </div>
    <%if @classes.present?%>
       <%= render "shared/forms/form_inline_ambiente" %>
    <%end%>
