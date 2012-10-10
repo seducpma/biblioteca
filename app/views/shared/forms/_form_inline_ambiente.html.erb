@@ -3,7 +3,7 @@
                 <table width="100%">
                   <% form_remote_for :ambiente, :method => :post, :success => "$.fn.colorbox.close()",
                     :url => {:controller => :configuracoes,
-                    :action => :create_ambiente } do |f| %>
+                    :action => :inline_create_ambiente } do |f| %>
                     <%= f.error_messages %>
                       <p>
                         <%= f.label :user_id, "Usuário" %><br />

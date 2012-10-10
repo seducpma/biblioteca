@@ -49,19 +49,24 @@ class ConfiguracoesController < ApplicationController
     @ambiente = Ambiente.new
   end
 
+  def inline_create_ambiente
+   @a = @ambiente = Ambiente.find_or_create_by_user_id(current_user.id)
+    @ambiente.unidade_id = current_user.unidade_id
+    @ambiente.update_attributes(params[:ambiente])
+      render :update do |page|
+        page.replace_html 'ambiente', :partial => "show"
+        page.replace_html 'atual', :partial => "show"
+      end
+  end
+
+
 
   def create_ambiente
    @a = @ambiente = Ambiente.find_or_create_by_user_id(current_user.id)
     @ambiente.unidade_id = current_user.unidade_id
     @ambiente.update_attributes(params[:ambiente])
-    if params[:type].to_i == 1
-      render :update do |page|
-        page.replace_html 'ambiente', :partial => "show"
-        page.replace_html 'atual', :partial => "show"
-      end
-    else
-      redirect_to home_path(:type => 0)
-    end
+    redirect_to home_path
+
   end
 
   
