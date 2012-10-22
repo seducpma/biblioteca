@@ -50,7 +50,7 @@ class AutoresController < ApplicationController
   end
 
 
-  def consultaAut
+  def consulta_aut
   unless params[:search].present?
     if params[:type_of].to_i == 3
       @contador = Autor.all.count

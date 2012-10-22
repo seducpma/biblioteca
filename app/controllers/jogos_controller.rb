@@ -95,7 +95,7 @@ def create_local
     @jogos_cad = Tombo.all(:conditions => ["user_id = ? and jogo_id is not null", current_user], :limit => limit.qtde_livro, :order => "id DESC")
   end
 
-def consultaJog
+def consulta_jog
  unless params[:search].present?
    if params[:type_of].to_i == 3
      @contador = Jogo.find(:all, :order => 'nome ASC')

@@ -15,7 +15,7 @@ class DicionarioEnciclopediasController < ApplicationController
       end
     end
 
- def consultaDic
+ def consulta_dic
    unless (params[:search].present?) or (params[:search].to_s == "Digite parte da busca")
      if params[:type_of].to_i == 6
        @contador = Livro.all(:include => [:localizacao],:conditions =>["localizacoes.unidade_id = ? and tipo <> ?",current_user.unidade_id, 'LIVRO']).count

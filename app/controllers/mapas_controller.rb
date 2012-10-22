@@ -63,7 +63,7 @@ def create_local
     redirect_to mapas_url
   end
 
-def consultaMap
+def consulta_map
  unless params[:search].present?
    if params[:type_of].to_i == 3
      @contador = Mapa.all(:include => [:localizacao],:conditions => ["localizacoes.unidade_id = ?", current_user.unidade_id]).count

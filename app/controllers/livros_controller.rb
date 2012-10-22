@@ -153,11 +153,11 @@ class LivrosController < ApplicationController
     end
   end
 
-def consultaTipo
+def consulta_tipo
   
 end
 
-def consultaLiv
+def consulta_liv
    unless params[:search].present?
      if params[:type_of].to_i == 7
        @contador = Livro.all(:include => [:localizacao],:conditions => ["localizacoes.unidade_id = ?", current_user.unidade_id]).count

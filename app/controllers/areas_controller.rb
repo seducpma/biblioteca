@@ -47,7 +47,7 @@ before_filter :load_resources
   end
 
 
-def consultaAre
+def consulta_are
   unless params[:search].present?
     if params[:type_of].to_i == 3
       @contador = Area.all.count
@@ -65,6 +65,9 @@ def consultaAre
       end
     end
   end
+end
+
+def consulta_are_liv
 end
 
 def consulta_area_livro

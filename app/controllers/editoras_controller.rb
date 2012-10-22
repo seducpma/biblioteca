@@ -46,7 +46,7 @@ class EditorasController < ApplicationController
     redirect_to editoras_url
   end
 
-def consultaEdi
+def consulta_edi
   unless params[:search].present?
     if params[:type_of].to_i == 3
       @contador = Editora.all.count
@@ -64,6 +64,9 @@ def consultaEdi
       end
     end
   end
+end
+
+def consulta_edi_liv
 end
 
 def consulta_editora_livro
