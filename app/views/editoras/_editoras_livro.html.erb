@@ -7,9 +7,8 @@
            <th width="300">Livro</th>
            <th colspan="3">Administração</th
          </tr>
-          <tr bgcolor="#F5F5F5">
            <%$t=0%>
-           <% @editoras.livros.each do |livro| %>
+           <% @editoras.livros.all(:joins => [:localizacao], :conditions => ["localizacoes.unidade_id = ?",current_user.unidade_id]).each do |livro| %>
               <%$t = $t+1%>
               <tr bgcolor="#F5F5F5">
               <td align="left"><%= @editoras.nome %></td>
