@@ -46,14 +46,14 @@ display: none;
       <% if current_user.has_role?('admin') %>
        Acesso de Administrador do Sistema<font size="1"> ................................................................</font> <font size ="2"><b>Americana, <%= Time.now.strftime("%d de %B de %Y") %></b></font>
       <%else%>
-         <% if current_user.has_role?('bibliotecario') %>
-            Acesso de Bibliotecario(a)<font size="1"> .....................................................................</font> <font size ="2"><b>Americana, <%= Time.now.strftime("%d de %B de %Y") %></b></font>
+         <% if current_user.has_role?('responsavel') %>
+            Acesso de Responsável pela Biblioteca(a)<font size="1"> .....................................................................</font> <font size ="2"><b>Americana, <%= Time.now.strftime("%d de %B de %Y") %></b></font>
          <%else%>
-            <% if current_user.has_role?('SEDUC') %>
-                  Acesso de Funcinário(a) SEDUC<font size="1"> .....................................................................</font> <font size ="2"><b>Americana, <%= Time.now.strftime("%d de %B de %Y") %></b></font>
+            <% if current_user.has_role?('escola') %>
+                  Acesso de Responsável pela Unidade Escolar<font size="1"> .....................................................................</font> <font size ="2"><b>Americana, <%= Time.now.strftime("%d de %B de %Y") %></b></font>
             <%else%>
-               <% if current_user.has_role?('estagiario') %>
-                     Acesso de  Estagiário(a)<font size="1"> .....................................................................</font> <font size ="2"><b>Americana, <%= Time.now.strftime("%d de %B de %Y") %></b></font>
+               <% if current_user.has_role?('usuario') %>
+                     Acesso de  Usuário(a)<font size="1"> .....................................................................</font> <font size ="2"><b>Americana, <%= Time.now.strftime("%d de %B de %Y") %></b></font>
                <%else%>>
                      Acesso de Usuário(a)<font size="1"> .....................................................................</font> <font size ="2"><b>Americana, <%= Time.now.strftime("%d de %B de %Y") %></b></font>
               <%end%>
@@ -81,7 +81,7 @@ display: none;
               <li><span class="divider divider-vert" ></span></li>
               <li><a class="item-primary" href="#;">Acervo</a>
                  <ul style="width:108px;">
-                   <% if current_user.has_role?('admin') or current_user.has_role?('bibliotecario') %>
+                   <% if current_user.has_role?('admin') or current_user.has_role?('responsavel') %>
                     <li><a href="#"><b>Cadastrar</b></a>
                          <ul>
                           <li><%= link_to "Jogos", new_jogo_path %></li>
@@ -142,7 +142,7 @@ display: none;
               <li><span class="divider divider-vert" ></span></li>
               <li><a class="item-primary" href="#;">Operações</a>
                  <ul style="width:108px;">
-                   <% if current_user.has_role?('admin') or current_user.has_role?('bibliotecario') %>
+                   <% if current_user.has_role?('admin') or current_user.has_role?('responsavel') %>
                     <li><a href="#"><b>Emprestimos</b></a>
                          <ul>
                            <li><%= link_to "Alunos", new_emprestimo_path(:type => 0 ) %> </li>
@@ -166,7 +166,7 @@ display: none;
               <li><span class="divider divider-vert" ></span></li>
               <li><a class="item-primary" href="#;">Gerenciamento</a>
                  <ul style="width:108px;">
-                   <% if current_user.has_role?('admin') or current_user.has_role?('bibliotecario') %>
+                   <% if current_user.has_role?('admin') or current_user.has_role?('responsavel') %>
                     <li><a href="#"><b>Tabelas</b></a>
                          <ul>
                           <li><%= link_to "Autores", consultaAut_path %></li>
