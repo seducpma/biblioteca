@@ -123,9 +123,15 @@ display: none;
                            </li>
                          </ul>
                         </li>
-                         <li><a>Na rede</a>
+                         <li><a>SEDUC</a>
                            <ul>
                              <li><%= link_to "Dicionários" %></li>
+                             <li><a href="#"><b>Livros</b></a>
+                                <ul>
+                                  <li><%= link_to "Por Área", consultaAreLiv_path %></li>
+                                  <li><%= link_to "Por Assuntos", consultaAsu_path %></li>
+                                </ul>
+                              </li>
                            </ul>
                          </li>
                        </ul>
@@ -165,7 +171,7 @@ display: none;
                          <ul>
                           <li><%= link_to "Autores", consultaAut_path %></li>
                           <li><%= link_to "Áreas", consultaAre_path %></li>
-                          <li><%= link_to "Assuntos", consultaAsu_path %></li>
+                          <li><%= link_to "Assuntos", assuntos_path %></li>
                           <li><%= link_to "Cantores", consultaCan_path %></li>
                           <li><%= link_to "Editoras", consultaEdi_path %></li>
                           <li><%= link_to "Gêneros", consultaGen_path %></li>

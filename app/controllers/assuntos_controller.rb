@@ -2,9 +2,25 @@ class AssuntosController < ApplicationController
   before_filter :login_required
   before_filter :load_resources
 
-  def index
-    @assuntos = Assunto.all
+ def index
+  unless params[:search].present?
+    if params[:type_of].to_i == 3
+      @contador = Assunto.all.count
+      @assuntos = Assunto.paginate :all,:page => params[:page], :order => 'descricao ASC', :per_page => 22
+      render :update do |page|
+        page.replace_html 'assuntos', :partial => "assuntos1"
+      end
+    end
+  else
+    if params[:type_of].to_i == 1
+      @contador = Assunto.all(:conditions => ["descricao like ?", "%" + params[:search].to_s + "%"]).count
+      @assuntos = Assunto.paginate :all, :page => params[:page], :per_page => 20, :conditions => ["descricao like ?", "%" + params[:search].to_s + "%"],:order => 'descricao ASC'
+      render :update do |page|
+        page.replace_html 'assuntos', :partial => "assuntos1"
+      end
+    end
   end
+ end
 
   def show
     @assunto = Assunto.find(params[:id])
