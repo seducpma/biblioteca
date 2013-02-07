@@ -6,6 +6,10 @@
      <% if @a.present? %>
       <%= render "configuracoes/show" %>
      <%end%>
+     <br/>
+     <% if session[:falha].present? %>
+        <%= render :text => session[:falha] %>
+     <%end%>
    </div>
    <hr/>
     <h1>EMPRÉSTIMOS EM VIGÊNCIA</h1>
