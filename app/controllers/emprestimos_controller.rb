@@ -9,6 +9,7 @@ class EmprestimosController < ApplicationController
   end
 
   def busca_tombo
+    t = params[:tombo]
     @dpu = Dpu.find(:all,:include => [:livro => [:localizacao]], :conditions => ["livros.tombo_l = ? and localizacoes.unidade_id = ? and dpus.status = ?", params[:tombo], current_user.unidade_id,1])
      render :update do |page|
        page.replace_html 'selecao', :partial => "carrinho"
@@ -187,7 +188,6 @@ class EmprestimosController < ApplicationController
           end
     end
   end
-
 
   def retorno
       @pessoa = Aluno.find(params[:pessoa])

@@ -1,0 +1,20 @@
+                   <% if current_user.has_role?('admin') or current_user.has_role?('responsavel') %>
+                    <li><a href="#"><b>Emprestimos</b></a>
+                         <ul>
+                           <li><%= link_to "Alunos", new_emprestimo_path(:type => 0 ) %> </li>
+                           <li><%= link_to "Funcionarios", new_emprestimo_path(:type => 1)%></li>
+                        </ul>
+                     </li>
+                  <%end%>
+                     <li><a>Devolução</a>
+                        <ul>
+                          <li><%= link_to "Por Aluno"%></li>
+                          <li><%= link_to "Por Classe"%></li>
+                          <li><%= link_to "Por Emprestimo"%></li>
+                          <li><%= link_to "Por Título"%></li>
+                          <li><%= link_to "Por Tombo"%></li>
+                          </ul>
+                      </li>
+
+
+

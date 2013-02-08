@@ -3,10 +3,10 @@ class HomeController < ApplicationController
   
   def index
     @emprestimos = Emprestimo.paginate(:all,:conditions => ["status = 1 and unidade_id = ?",current_user.unidade], :per_page => 15, :page => params[:page], :order => "id Desc")
-    a = Ambiente.find_by_user_id(current_user.id)
-    if a.present?
-       u = a.user_id
-       @a = a
+    ambiente = Ambiente.find_by_user_id(current_user.id)
+    if ambiente.present?
+       u = ambiente.user_id
+       @a = ambiente
     end
   end
 
@@ -19,7 +19,7 @@ class HomeController < ApplicationController
         @classes = Aluno.all(:select => "id_classe, classe_descricao, classe_ano, id_escola",:conditions => ["classe_ano = ? and id_escola = ?", Date.today.strftime("%Y").to_i, current_user.unidade.unidades_gpd_id], :group => ["id_classe,classe_descricao, classe_ano,id_escola"] , :order => "classe_descricao")
       end
     rescue
-      session[:falha] = "Impossivel conectar ao servidor. Emprestimos e Devoluções desabilitadas"
+      session[:falha] = "1"
     end
      #@disponiveis = Dpu.all(:include => [:livro =>[:identificacao]],:conditions => ["(dpus.livro_id is not null) and dpus.status = 1 and dpus.unidade_id = ?", current_user.unidade_id],:order => "identificacaos.livro ASC")
   end

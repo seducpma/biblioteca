@@ -1,6 +1,7 @@
 function Imprimir(){
 window.print();
 }
+
 function MM_openBrWindow(theURL,winName,features) {
 window.open(theURL,winName,features);
 }
@@ -10,7 +11,26 @@ function remove_livro(link) {
     var olddiv = document.getElementById(link);
     d.removeChild(olddiv);
 }
+
+// Dialog function
+function dialogo() {
+    $( "#dialog-modal" ).dialog({
+      height: 140,
+      modal: true
+    });
+}
+
 jQuery(document).ready(function( $ ){
+
+//Dialog
+
+$(function() {
+    $( "#dialog-modal" ).dialog({
+      height: 140,
+      modal: true
+    });
+  });
+
 
 
 //Ajusta filtros

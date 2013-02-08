@@ -1,14 +1,10 @@
 <div id="interno1">
    <br/>
-   <%= link_to 'Ambiente configurado', "#inline_ambiente", :class =>"line", :type => 1%>
+    <%= link_to 'Classe configurada', "#inline_ambiente", :class =>"line", :type => 1%>
    <hr/>
    <div id="atual">
      <% if @a.present? %>
       <%= render "configuracoes/show" %>
-     <%end%>
-     <br/>
-     <% if session[:falha].present? %>
-        <%= render :text => session[:falha] %>
      <%end%>
    </div>
    <hr/>
@@ -18,4 +14,14 @@
     <br/>
 
     <div id="emprestimos"><%= render "emprestimos" %></div>
-</div>    
+</div>
+
+     <% if session[:falha].present? %>
+       <div id="dialog-modal" title="Alerta!!!">
+        <%= render :text => "Impossivel conectar ao servidor GPD. Emprestimos e Devoluções desabilitadas" %>
+       </div>
+     <%else%>
+       <div id="dialog-modal" title="Sucesso!!!">
+         <%= render :text => "Conexão com sistema GPD realizada." %>
+       </div>
+     <%end%>

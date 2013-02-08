@@ -3,8 +3,7 @@ class AreasController < ApplicationController
 before_filter :load_resources
 
   def index
-    @areas = Area.paginate :page => params[:page], :order => 'nome ASC', :per_page => 20
-    
+    @areas = Area.paginate :page => params[:page], :order => 'nome ASC', :per_page => 20    
   end
 
   def show
@@ -73,10 +72,7 @@ def consulta_are_liv1
 end  
 
 
-def consulta_are_liv
-    
-    $teste= params[:area_id]
-    $teste1= params[:type_area].to_i
+def consulta_are_liv   
   unless params[:search_area_id].present?
   if params[:type_area].to_i == 1
    session[:area] = params[:area_id]
@@ -87,7 +83,6 @@ def consulta_are_liv
     end
   else
   if params[:type_area].to_i == 2
-    $teste= params[:type_area].to_i
     session[:area] = params[:area_id]
     @areas = Area.find(session[:area])
        render :update do |page|

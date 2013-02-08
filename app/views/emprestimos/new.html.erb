@@ -1,17 +1,23 @@
-<% title "EMPRÉSTIMOS".singularize %>
-<div class="caixa">
-  <div class="tabs">
-   <div id="caixa_titulo">
-       <font size="4"><strong>EMPRÉSTIMO BIBLIOTECA</strong></font><br/>
-   </div>
+<% unless  session[:falha] == "1" %>
+  <% title "EMPRÉSTIMOS".singularize %>
+  <div class="caixa">
+    <div class="tabs">
+     <div id="caixa_titulo">
+         <font size="4"><strong>EMPRÉSTIMO BIBLIOTECA</strong></font><br/>
+     </div>
 
-        <%= render :partial => 'form' %>
+          <%= render :partial => 'form' %>
 
-    <table width="50%">
-     <tr>
-      <td align="center"> <%= link_to image_tag("/stylesheets/images/voltar.png", :size => "35x35"), root_path, :title => "Voltar" %></td>
-     </tr>
-    </table>
+      <table width="50%">
+       <tr>
+        <td align="center"> <%= link_to image_tag("/stylesheets/images/voltar.png", :size => "35x35"), root_path, :title => "Voltar" %></td>
+       </tr>
+      </table>
 
+    </div>
   </div>
-</div>
+<%else%>
+  <div id="dialog-modal" title="Alerta!!!">
+    <%= render :text => "Impossivel conectar ao servidor GPD. Emprestimos e Devoluções desabilitadas" %>
+  </div>
+<%end%>

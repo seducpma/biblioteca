@@ -6,11 +6,12 @@
 
     <title><%= "Sistema de bibliotecas inter-escolares. Você está em: #{h(yield(:title) || 'Sem titulo')}" %></title>
 
-    
+    <%= javascript_include_tag 'jquery-1.7.js','jquery.bgiframe.js','jquery.tooltip.js','jquery-ui-1.8.16.custom.min.js',"jquery.ui.datetimepicker.min","jquery-ui-i18n.min",'jrails',"jquery.colorbox","colorbox.js","jquery.multiselect.min","ui.selectmenu",'plugins/flexigrid/js/flexigrid.pack','application.js' %>
     <%= stylesheet_link_tag 'application','menu' %>
     <%= stylesheet_link_tag '/javascripts/plugins/flexigrid/css/flexigrid.css' %>
     <%= stylesheet_link_tag 'colorbox','geral',"jquery.tooltip.css","pepper-grinder/jquery-ui-1.8.16.custom","jquery.multiselect","ui.selectmenu" %>
-    <%= javascript_include_tag 'jquery-1.7','jquery.bgiframe.js','jquery.dimensions.js','jquery.tooltip.js','jquery-ui-1.8.16.custom.min',"jquery.ui.datetimepicker.min","jquery-ui-i18n.min",'jrails',"jquery.colorbox","colorbox.js","jquery.multiselect.min","ui.selectmenu",'plugins/flexigrid/js/flexigrid.pack','application.js' %>
+    
+
     <%= yield(:head) %>
   </head>
 
@@ -119,37 +120,18 @@ display: none;
                                  <li><%= link_to "Por Titulo", consultaMus_path %></li>
                               </ul>
                            </li>
-
-
-
                        </ul>
                       </li>
                  </ul>
               </li>
               <% if current_user.has_role?('admin') and current_user.has_role?('escola') or  current_user.has_role?('responsavel')%>
-              <li><span class="divider divider-vert" ></span></li>
-              <li><a class="item-primary" href="#;">Operações</a>
+                <li><span class="divider divider-vert" ></span></li>
+                <li><a class="item-primary" href="#;">Operações</a>
                  <ul style="width:108px;">
-                   <% if current_user.has_role?('admin') or current_user.has_role?('responsavel') %>
-                    <li><a href="#"><b>Emprestimos</b></a>
-                         <ul>
-                           <li><%= link_to "Alunos", new_emprestimo_path(:type => 0 ) %> </li>
-                           <li><%= link_to "Funcionarios", new_emprestimo_path(:type => 1)%></li>
-                        </ul>
-                     </li>
-                  <%end%>
-                     <li><a>Devolução</a>
-                        <ul>
-                          <li><%= link_to "Por Aluno"%></li>
-                          <li><%= link_to "Por Classe"%></li>
-                          <li><%= link_to "Por Emprestimo"%></li>
-                          <li><%= link_to "Por Título"%></li>
-                          <li><%= link_to "Por Tombo"%></li>
-                          </ul>
-                      </li>
+                    <div id="operacao"><%= render "shared/operacoes" %></div>
                  </ul>
               </li>
-             <%end%>
+              <%end%>
               <% if current_user.has_role?('admin') and current_user.has_role?('escola') or  current_user.has_role?('responsavel')%>
               <li><span class="divider divider-vert" ></span></li>
               <li><a class="item-primary" href="#;">Gerenciamento</a>
