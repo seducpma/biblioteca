@@ -15,9 +15,9 @@
             <th width="100">Editora</th>
             <th colspan="3">Administração</th>
         </tr>
-         <%$t=0%>
+         <%session[:contador]=0%>
          <% for livro in @livros %>
-            <%$t = $t+1%>
+            <%session[:contador] = session[:contador]+1%>
             <tr bgcolor="	#F5F5F5">
                 <td align="left"><%=h livro.tombo_l%></td>
                  <td align="left"><%=h livro.tipo%></td>
@@ -39,9 +39,12 @@
             <% end %>
      </table>
      <table bgcolor="#DCDCDC" width="100%">
+       <tr>
+         <td><%= will_paginate @livros %></td>
+       </tr>
       <tr >
           <td align="left"><b>TOTAL: </b>
-            <font color ="red "size="2"><b><%=$t %></b></font> <b>EXEMPLAR(ES) </b>
+            <font color ="red "size="2"><b><%=session[:contador] %></b></font> <b>EXEMPLAR(ES) </b>
           </td>
       </tr>
     </table>

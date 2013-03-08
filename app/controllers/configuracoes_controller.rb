@@ -52,11 +52,20 @@ class ConfiguracoesController < ApplicationController
   def inline_create_ambiente
    @a = @ambiente = Ambiente.find_or_create_by_user_id(current_user.id)
     @ambiente.unidade_id = current_user.unidade_id
+    @pessoas = Aluno.all(:conditions => ["(id_classe = ?)",@ambiente.turma_id])
     @ambiente.update_attributes(params[:ambiente])
       render :update do |page|
         page.replace_html 'ambiente', :partial => "show"
         page.replace_html 'atual', :partial => "show"
       end
+        @pessoas.each do |aluno|
+          t = TempAluno.new
+            t.nome = aluno.nome
+            t.ra = aluno.aluno_ra
+            t.classe = aluno.classe_descricao
+            t.ano_letivo = aluno.classe_ano
+          t.save
+        end
   end
 
 

@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  nome: MyString
+  ra: 1
+  classe: MyString
+  ano_letivo: 1
+
+two:
+  nome: MyString
+  ra: 1
+  classe: MyString
+  ano_letivo: 1
